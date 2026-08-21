@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
-"""Aponta os cartoes de estatisticas do README para uma instancia propria
-do github-readme-stats.
+"""Point the README stats cards at your own github-readme-stats instance.
 
-Uso:
-    python scripts/use-self-hosted-stats.py github-readme-stats-seunome.vercel.app
+Usage:
+    python scripts/use-self-hosted-stats.py github-readme-stats-yourname.vercel.app
 
-Troca o conteudo entre os marcadores <!-- cards:start --> / <!-- cards:end -->
-e <!-- pin:start --> / <!-- pin:end -->. Salva README.bak.md antes de escrever.
+Swaps whatever sits between the <!-- cards:start --> / <!-- cards:end --> and
+<!-- pin:start --> / <!-- pin:end --> markers. Writes README.bak.md first.
 
-Passo a passo do deploy: docs/self-host-stats.md
+Deploy walkthrough: docs/self-host-stats.md
 """
 
 from __future__ import annotations
@@ -26,7 +25,7 @@ ROOT = Path(__file__).resolve().parent.parent
 README = ROOT / "README.md"
 BACKUP = ROOT / "README.bak.md"
 
-# Identidade visual do perfil.
+# Profile palette.
 DARK = {
     "bg_color": "00000000",
     "title_color": "4A7DBF",
@@ -60,7 +59,7 @@ def picture(host: str, path: str, params: dict[str, str], alt: str, height: str 
     )
 
 
-def build_stats(host: str) -> str:
+def build_cards(host: str) -> str:
     stats = picture(
         host,
         "/api",
@@ -70,13 +69,13 @@ def build_stats(host: str) -> str:
             "count_private": "true",
             "include_all_commits": "true",
         },
-        "Resumo de estatisticas do GitHub de " + USER,
+        f"GitHub stats summary for {USER}",
     )
     langs = picture(
         host,
         "/api/top-langs/",
         {"username": USER, "layout": "compact", "langs_count": "8"},
-        "Linguagens mais usadas por " + USER,
+        f"Most used languages by {USER}",
     )
     return '<p align="center">\n' + stats + "\n" + langs + "\n</p>"
 
@@ -86,7 +85,7 @@ def build_pin(host: str) -> str:
         host,
         "/api/pin/",
         {"username": USER, "repo": PIN_REPO},
-        f"Cartao do repositorio {PIN_REPO}",
+        f"{PIN_REPO} repository card",
         height="",
     ).replace(' height=""', "")
     return (
@@ -103,7 +102,7 @@ def replace_block(text: str, name: str, new_body: str) -> str:
         re.DOTALL,
     )
     if not pattern.search(text):
-        sys.exit(f"erro: marcadores <!-- {name}:start --> / <!-- {name}:end --> nao encontrados em README.md")
+        sys.exit(f"error: markers <!-- {name}:start --> / <!-- {name}:end --> not found in README.md")
     return pattern.sub(lambda m: m.group(1) + new_body + m.group(2), text)
 
 
@@ -114,18 +113,18 @@ def main() -> None:
     host = sys.argv[1].strip().rstrip("/")
     host = re.sub(r"^https?://", "", host)
     if not re.fullmatch(r"[A-Za-z0-9.-]+\.[A-Za-z]{2,}", host):
-        sys.exit(f"erro: '{host}' nao parece um dominio. Exemplo: github-readme-stats-seunome.vercel.app")
+        sys.exit(f"error: '{host}' doesn't look like a domain. Example: github-readme-stats-yourname.vercel.app")
 
     text = io.open(README, encoding="utf-8").read()
-    text = replace_block(text, "cards", build_stats(host))
+    text = replace_block(text, "cards", build_cards(host))
     text = replace_block(text, "pin", build_pin(host))
 
     shutil.copyfile(README, BACKUP)
     io.open(README, "w", encoding="utf-8", newline="\n").write(text)
 
-    print(f"README.md aponta agora para https://{host}")
-    print(f"backup em {BACKUP.name}")
-    print("confira com: python scripts/check-readme-links.py")
+    print(f"README.md now points at https://{host}")
+    print(f"backup written to {BACKUP.name}")
+    print("verify with: python scripts/check-readme-links.py")
 
 
 if __name__ == "__main__":

@@ -1,82 +1,82 @@
-# Hospedar seus próprios cartões de estatísticas
+# Hosting your own stats cards
 
-## Por que
+## Why
 
-Os cartões deste README dependem de instâncias públicas e gratuitas mantidas por terceiros. Elas caem. Em agosto de 2026 aconteceram duas quedas ao mesmo tempo:
+The cards in this README depend on free instances maintained by other people. They go down. In August 2026, two went down at the same time:
 
-| Serviço | O que aconteceu |
+| Service | What happened |
 | --- | --- |
-| `github-readme-stats.vercel.app` | Responde `503 DEPLOYMENT_PAUSED` — a instância pública oficial foi pausada na Vercel. |
-| `github-readme-streak-stats.herokuapp.com` | Sem resposta — a Heroku encerrou os dynos gratuitos e o projeto mudou de host (hoje é `streak-stats.demolab.com`). |
+| `github-readme-stats.vercel.app` | Returns `503 DEPLOYMENT_PAUSED` — the official public instance was paused on Vercel. |
+| `github-readme-streak-stats.herokuapp.com` | No response — Heroku ended its free dynos and the project moved hosts (it now lives at `streak-stats.demolab.com`). |
 
-Enquanto isso, o README usa `github-profile-summary-cards`, `streak-stats.demolab.com` e `github-readme-activity-graph`, que estão no ar. Todos continuam sendo instâncias compartilhadas de terceiros — o mesmo risco, só que adiado.
+The README currently uses `github-profile-summary-cards`, `streak-stats.demolab.com` and `github-readme-activity-graph`, which are up. All three are still shared third-party instances — same risk, just postponed.
 
-Rodando a sua própria instância do [github-readme-stats](https://github.com/anuraghazra/github-readme-stats), o único jeito de ela cair é você derrubar. De quebra, você recupera três cartões melhores que os substitutos atuais: o card de stats oficial, o de top languages e o *pin* de repositório.
+Run your own instance of [github-readme-stats](https://github.com/anuraghazra/github-readme-stats) and the only way it goes down is if you take it down. As a bonus you get back three cards that beat the current substitutes: the official stats card, the top languages card, and the repository pin.
 
-## Passo a passo
+## Step by step
 
-Leva ~10 minutos e é tudo gratuito.
+Takes about 10 minutes, all free.
 
-### 1. Faça o fork
+### 1. Fork the repository
 
 ```bash
 gh repo fork anuraghazra/github-readme-stats --clone=false
 ```
 
-(Ou pelo botão **Fork** em github.com/anuraghazra/github-readme-stats.)
+(Or use the **Fork** button at github.com/anuraghazra/github-readme-stats.)
 
-### 2. Gere um token do GitHub
+### 2. Create a GitHub token
 
-Em **Settings → Developer settings → Personal access tokens → Tokens (classic) → Generate new token (classic)**:
+Go to **Settings → Developer settings → Personal access tokens → Tokens (classic) → Generate new token (classic)**:
 
 - **Note:** `readme-stats`
-- **Expiration:** sem expiração, ou anote na agenda para renovar
-- **Scopes:** **nenhum**. Não marque nada — o token só precisa ler dados públicos, e um token sem escopo é o mais seguro que existe. Marque `repo` apenas se quiser contar commits de repositórios privados.
+- **Expiration:** no expiration, or put a renewal reminder in your calendar
+- **Scopes:** **none**. Don't check anything — the token only needs to read public data, and a token with no scopes is the safest one there is. Check `repo` only if you want commits from private repositories to be counted.
 
-Copie o token. Ele só aparece uma vez.
+Copy the token. It's shown only once.
 
-### 3. Suba na Vercel
+### 3. Deploy on Vercel
 
-1. Entre em [vercel.com](https://vercel.com) com a conta do GitHub.
-2. **Add New → Project → Import** o seu fork `github-readme-stats`.
-3. Antes de clicar em Deploy, abra **Environment Variables** e adicione:
+1. Sign in to [vercel.com](https://vercel.com) with your GitHub account.
+2. **Add New → Project → Import** your `github-readme-stats` fork.
+3. Before clicking Deploy, open **Environment Variables** and add:
    - **Name:** `PAT_1`
-   - **Value:** o token do passo 2
+   - **Value:** the token from step 2
 4. **Deploy**.
 
-Ao final você tem um domínio parecido com `https://github-readme-stats-seunome.vercel.app`.
+You'll end up with a domain like `https://github-readme-stats-yourname.vercel.app`.
 
-> O nome da variável é `PAT_1` mesmo, com underline e o número. Sem ela o cartão renderiza um SVG escrito *"Maximum retries exceeded"* em vez das estatísticas — é assim que dá para saber que o token não chegou.
+> The variable really is called `PAT_1`, with the underscore and the number. Without it the card renders an SVG that reads *"Maximum retries exceeded"* instead of your stats — that's how you know the token never arrived.
 
-### 4. Aponte o README para a sua instância
+### 4. Point the README at your instance
 
 ```bash
-python scripts/use-self-hosted-stats.py github-readme-stats-seunome.vercel.app
+python scripts/use-self-hosted-stats.py github-readme-stats-yourname.vercel.app
 ```
 
-O script troca os blocos entre `<!-- cards:start -->` / `<!-- cards:end -->` e `<!-- pin:start -->` / `<!-- pin:end -->` pelos cartões da sua instância, já com as cores da identidade do perfil (`#1F3864` / `#4A7DBF`) e com `<picture>` para tema claro e escuro. Ele salva `README.bak.md` antes de mexer.
+The script swaps the blocks between `<!-- cards:start -->` / `<!-- cards:end -->` and `<!-- pin:start -->` / `<!-- pin:end -->` for cards from your instance, already using the profile's palette (`#1F3864` / `#4A7DBF`) and wrapped in `<picture>` for light and dark themes. It writes `README.bak.md` before touching anything.
 
-Confira o resultado e commite:
+Review the result and commit:
 
 ```bash
 git diff README.md
-git add README.md && git commit -m "stats: aponta cartoes para instancia propria"
+git add README.md && git commit -m "stats: point cards at own instance"
 ```
 
-### 5. Verifique
+### 5. Verify
 
 ```bash
 python scripts/check-readme-links.py
 ```
 
-Percorre todas as imagens do README e falha se alguma responder fora de 200 ou devolver um SVG de erro. Vale rodar de vez em quando — é exatamente esse check que teria pego as duas quedas acima no dia em que aconteceram.
+Walks every image in the README and fails if any responds with something other than 200 or returns an error SVG. Worth running now and then — this is exactly the check that would have caught both outages above on the day they happened.
 
-## Voltar atrás
+## Rolling back
 
-`README.bak.md` guarda a versão anterior. Para desfazer sem o backup, `git checkout README.md`.
+`README.bak.md` holds the previous version. To undo without the backup, `git checkout README.md`.
 
-## Manutenção
+## Maintenance
 
-- **Token expirado** derruba os cartões da mesma forma que um serviço fora do ar. Se você escolheu expiração, coloque um lembrete.
-- **O fork não precisa ser atualizado** para os cartões funcionarem. Sincronize com o upstream só se quiser temas ou parâmetros novos.
-- A Vercel hiberna projetos gratuitos sem tráfego; a primeira requisição depois de um tempo parado pode demorar alguns segundos. Isso é lentidão, não queda.
+- **An expired token** breaks the cards just like a service outage does. If you set an expiration date, set a reminder too.
+- **The fork doesn't need updating** for the cards to work. Sync with upstream only if you want new themes or parameters.
+- Vercel idles free projects with no traffic; the first request after a quiet spell can take a few seconds. That's slowness, not an outage.

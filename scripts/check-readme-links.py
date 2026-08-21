@@ -1,18 +1,19 @@
 #!/usr/bin/env python3
-"""Verifica se todas as imagens do README ainda respondem.
+"""Check that every image in the README still responds.
 
-Uso:
+Usage:
     python scripts/check-readme-links.py
 
-Sai com codigo 1 se alguma imagem estiver fora do ar. Servicos gratuitos de
-cartoes de estatisticas caem sem aviso, e o README quebra em silencio quando
-isso acontece -- este check existe para nao descobrir pelo print de outra pessoa.
+Exits 1 if any image is down. Free stats-card services disappear without
+warning and the README breaks silently when they do -- this check exists so
+you don't find out from someone else's screenshot.
 
-Detecta tres formas de quebra:
-  * resposta HTTP diferente de 200
-  * SVG de erro devolvido com status 200 (o padrao do github-readme-stats
-    quando falta o token: "Something went wrong" / "Maximum retries exceeded")
-  * caminho local referenciado no README que nao existe no repositorio
+It catches three shapes of failure:
+  * an HTTP status other than 200
+  * an error SVG served with status 200 (what github-readme-stats returns
+    when the token is missing: "Something went wrong" / "Maximum retries
+    exceeded")
+  * a local path referenced by the README that isn't in the repository
 """
 
 from __future__ import annotations
@@ -27,7 +28,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 README = ROOT / "README.md"
 TIMEOUT = 45
-RETRIES = 3  # instancias compartilhadas devolvem 503 esporadico sob carga
+RETRIES = 3  # shared instances throw the occasional 503 under load
 
 ERROR_MARKERS = (
     "something went wrong",
@@ -47,55 +48,55 @@ def sources(text: str) -> list[str]:
 
 
 def check_remote(url: str) -> str | None:
-    """Retorna None se ok, ou uma descricao do problema."""
-    last = "sem resposta"
-    for attempt in range(RETRIES):
+    """Return None when healthy, or a description of the problem."""
+    last = "no response"
+    for _ in range(RETRIES):
         try:
             request = urllib.request.Request(url, headers={"User-Agent": "readme-link-check"})
             with urllib.request.urlopen(request, timeout=TIMEOUT) as response:
                 body = response.read(20000).decode("utf-8", "replace").lower()
                 for marker in ERROR_MARKERS:
                     if marker in body:
-                        return f"status 200 mas o SVG diz: {marker!r}"
+                        return f"status 200 but the SVG reads: {marker!r}"
                 return None
         except urllib.error.HTTPError as exc:
             last = f"HTTP {exc.code}"
         except Exception as exc:  # timeout, DNS, TLS
             last = f"{type(exc).__name__}: {exc}"
-    return f"{last} (apos {RETRIES} tentativas)"
+    return f"{last} (after {RETRIES} attempts)"
 
 
 def main() -> int:
     text = io.open(README, encoding="utf-8").read()
     urls = sources(text)
     if not urls:
-        print("nenhuma imagem encontrada no README")
+        print("no images found in the README")
         return 1
 
     failures: list[tuple[str, str]] = []
-    print(f"verificando {len(urls)} imagens do README\n")
+    print(f"checking {len(urls)} images from the README\n")
 
     for url in urls:
         if url.startswith("http"):
             problem = check_remote(url)
         else:
             local = ROOT / url
-            problem = None if local.exists() else "arquivo local nao encontrado"
+            problem = None if local.exists() else "local file not found"
 
         label = url if len(url) <= 88 else url[:85] + "..."
         if problem:
             failures.append((url, problem))
-            print(f"  FALHA  {label}\n         -> {problem}")
+            print(f"  FAIL  {label}\n        -> {problem}")
         else:
-            print(f"  ok     {label}")
+            print(f"  ok    {label}")
 
     print()
     if failures:
-        print(f"{len(failures)} de {len(urls)} imagens quebradas.")
-        print("Para hospedar seus proprios cartoes: docs/self-host-stats.md")
+        print(f"{len(failures)} of {len(urls)} images are broken.")
+        print("To host your own cards: docs/self-host-stats.md")
         return 1
 
-    print(f"todas as {len(urls)} imagens responderam.")
+    print(f"all {len(urls)} images responded.")
     return 0
 
 
