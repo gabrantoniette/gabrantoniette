@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="200" viewBox="0 0 1000 200" role="img" aria-label="Gabriel Antoniette — Python Developer, Data Engineer, Analytics">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0D1117"/>
+      <stop offset="100%" stop-color="#111C2E"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1F3864"/>
+      <stop offset="100%" stop-color="#4A7DBF"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1000" height="200" rx="10" fill="url(#bg)"/>
+  <rect width="6" height="200" rx="3" fill="url(#accent)"/>
+
+  <g font-family="'Segoe UI', 'SF Pro Display', Helvetica, Arial, sans-serif">
+    <text x="56" y="84" font-size="42" font-weight="600" fill="#E6EDF3" letter-spacing="-0.5">Gabriel Antoniette</text>
+    <rect x="57" y="102" width="132" height="3" rx="1.5" fill="#4A7DBF"/>
+    <text x="56" y="136" font-size="17" font-weight="400" fill="#9BA6B2" letter-spacing="0.4">Python Developer · Data Engineer · Analytics</text>
+  </g>
+
+  <text x="56" y="167" font-family="'Cascadia Code', 'JetBrains Mono', Consolas, monospace" font-size="13" fill="#4A7DBF">&gt;_ reliable data, clean APIs, docs worth reading</text>
+
+  <g fill="#4A7DBF">
+    <circle cx="760" cy="60" r="3" opacity="0.15"/><circle cx="798" cy="60" r="3" opacity="0.25"/><circle cx="836" cy="60" r="3" opacity="0.35"/><circle cx="874" cy="60" r="3" opacity="0.20"/><circle cx="912" cy="60" r="3" opacity="0.30"/>
+    <circle cx="760" cy="90" r="3" opacity="0.30"/><circle cx="798" cy="90" r="3" opacity="0.55"/><circle cx="836" cy="90" r="3" opacity="0.75"/><circle cx="874" cy="90" r="3" opacity="0.45"/><circle cx="912" cy="90" r="3" opacity="0.20"/>
+    <circle cx="760" cy="120" r="3" opacity="0.20"/><circle cx="798" cy="120" r="3" opacity="0.45"/><circle cx="836" cy="120" r="3" opacity="0.95"/><circle cx="874" cy="120" r="3" opacity="0.60"/><circle cx="912" cy="120" r="3" opacity="0.35"/>
+    <circle cx="760" cy="150" r="3" opacity="0.12"/><circle cx="798" cy="150" r="3" opacity="0.22"/><circle cx="836" cy="150" r="3" opacity="0.40"/><circle cx="874" cy="150" r="3" opacity="0.25"/><circle cx="912" cy="150" r="3" opacity="0.15"/>
+  </g>
+  <path d="M745 135 L 790 112 L 830 120 L 875 78 L 925 66" fill="none" stroke="#4A7DBF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"/>
+</svg>
