@@ -39,7 +39,7 @@ class Gabriel:
         return "building and documenting full-stack data projects"
 
     def open_to(self) -> list[str]:
-        return ["open source collaboration", "conversations about data, APIs and Python"]
+        return ["companies collaboration", "systems developments"]
 ```
 
 
