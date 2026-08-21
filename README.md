@@ -20,9 +20,9 @@
 
 ### About
 
-I work in **data analysis and data engineering**, focused on data quality and BI. I like owning the whole problem: from modeling and ingestion, through the API that serves the data, to the screen where someone actually decides something with it.
+I work in **data analysis and data engineering**, focused on data quality and BI. I like owning the whole problem: from modeling and ingestion, through the report that serves the data, to the screen where someone actually decides something with it.
 
-These days I build my own projects carrying that same discipline — validated data, predictable APIs, honest documentation — into everyday tools. If one of them brought you here, I'd be glad to talk.
+These days I build my own projects carrying that same discipline: developing systems into everyday tools. If one of them brought you here, I'd be glad to here that!
 
 ```python
 from dataclasses import dataclass
@@ -42,16 +42,6 @@ class Gabriel:
         return ["open source collaboration", "conversations about data, APIs and Python"]
 ```
 
----
-
-### How I work
-
-- **Validate at the edge.** Contracts with Pydantic/SQLModel before anything is written — BI shouldn't inherit the mess from ingestion.
-- **One HTTP layer.** The web dashboard and the terminal menu consume the same API; business rules don't get duplicated.
-- **Accessibility isn't decoration.** Color is never the only indicator of state.
-- **Docs that explain decisions.** A good README tells you *why*, not just *how to install*.
-
----
 
 ### Stack
 
