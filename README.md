@@ -1,4 +1,4 @@
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:1F3864,100:4A7DBF&height=180&section=header&text=Gabriel%20Antoniette&fontSize=42&fontColor=ffffff&animation=fadeIn&fontAlignY=35&desc=Data%20Analyst%20%7C%20Data%20Engineer&descAlignY=58&descSize=18" width="100%"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:1F3864,100:4A7DBF&height=180&section=header&text=Gabriel%20Antoniette&fontSize=42&fontColor=ffffff&animation=fadeIn&fontAlignY=35&desc=Python%20Developer%20%7C%20Data%20Engineer%20%7C%20Analytics&descAlignY=58&descSize=16" width="100%"/>
 
 <p align="center">
   <a href="https://www.linkedin.com/in/gabriel-antoniette/"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white"/></a>
@@ -7,13 +7,14 @@
 
 ### Sobre mim
 
-Data Analyst e Data Engineer em São Paulo, transitando entre validação de qualidade de dados, engenharia de dados e BI. Gosto de projetos que saem do notebook e viram sistema de verdade — API, banco, interface, tudo se conversando.
+Possuo experiência sólida em Análise e Engenharia de Dados com foco em qualidade de dados e BI. Atualmente estou desenvolvendo projetos próprios a fim de agregar a tecnologia ao nosso dia a dia, tornando-a mais prática e otimizada, e também contribuindo em projetos reais.
 
 ```python
 class Gabriel:
     def __init__(self):
-        self.role = ["Python Developer", "Data Engineer"]
+        self.role = ["Python Developer", "Data Engineer", "Analytics"]
         self.stack = ["Python", "SQL", "DAX", "Power BI", "Azure", "Databricks", "GCP"]
+        self.skills = ["FastAPI", "SQLModel", "Requests", "HTTP", "Next.js", "React", "API", "Database", "SQL"]
         self.education = "B.Sc. Data Science — FIAP"
         self.languages = ["Português", "English"]
 
@@ -29,6 +30,8 @@ class Gabriel:
   <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white"/>
   <img src="https://img.shields.io/badge/SQL-4479A1?style=for-the-badge&logo=postgresql&logoColor=white"/>
   <img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white"/>
+  <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black"/>
+  <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white"/>
   <img src="https://img.shields.io/badge/Power_BI-F2C811?style=for-the-badge&logo=powerbi&logoColor=black"/>
   <img src="https://img.shields.io/badge/Azure-0078D4?style=for-the-badge&logo=microsoftazure&logoColor=white"/>
   <img src="https://img.shields.io/badge/Databricks-FF3621?style=for-the-badge&logo=databricks&logoColor=white"/>
