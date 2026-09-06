@@ -141,12 +141,14 @@ I split it into three applications on purpose, and not because of scale. There i
 
 <br>
 
-#### LinkedIn Growth: a multi-agent system that writes, reviews and refuses
+#### [LinkedIn Growth](https://github.com/gabrantoniette/linkedin-growth-agents): a multi-agent system that writes, reviews and refuses
 
 <p>
-  <img src="https://img.shields.io/badge/Status-going_public_soon-4A7DBF?style=flat-square" alt="Status: going public soon">
-  <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python">
-  <img src="https://img.shields.io/badge/Agno-1F3864?style=flat-square" alt="Agno">
+  <a href="https://github.com/gabrantoniette/linkedin-growth-agents">
+    <img src="https://img.shields.io/badge/Repository-linkedin--growth--agents-1F3864?style=flat-square&logo=github&logoColor=white" alt="linkedin-growth-agents repository">
+  </a>
+  <img src="https://img.shields.io/github/languages/top/gabrantoniette/linkedin-growth-agents?style=flat-square&color=4A7DBF" alt="Primary language of the project">
+  <img src="https://img.shields.io/github/last-commit/gabrantoniette/linkedin-growth-agents?style=flat-square&color=4A7DBF" alt="Date of the last commit">
 </p>
 
 Eight [Agno](https://github.com/agno-agi/agno) agents that audit a LinkedIn profile, plan content and draft posts, coordinated by a team leader that delegates and synthesizes.
