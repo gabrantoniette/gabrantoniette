@@ -17,7 +17,7 @@
   <a href="mailto:gabrantoniette@gmail.com">
     <img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email Gabriel Antoniette">
   </a>
-  <img src="https://img.shields.io/badge/Brazil-UTC%E2%88%923-1F3864?style=for-the-badge" alt="Based in Brazil, UTC minus 3">
+  <img src="https://img.shields.io/badge/Brazil-UTC%E2%88%923-1F3864?style=for-the-badge" alt="Based in Brazil">
   <img src="https://img.shields.io/badge/Open_to-AI_Engineering_roles-4A7DBF?style=for-the-badge" alt="Open to AI engineering roles">
 </p>
 
