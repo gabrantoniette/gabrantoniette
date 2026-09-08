@@ -2,12 +2,12 @@
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/banner-dark.svg">
     <source media="(prefers-color-scheme: light)" srcset="assets/banner-light.svg">
-    <img src="assets/banner-light.svg" width="100%" alt="Gabriel Antoniette. Python, LLM agents, three years of data in production">
+    <img src="assets/banner-light.svg" width="100%" alt="Gabriel Antoniette. Python, LLM agents, API">
   </picture>
 </p>
 
 <p align="center">
-  <img src="https://readme-typing-svg.demolab.com/?font=Fira+Code&weight=500&size=21&pause=1200&color=4A7DBF&center=true&vCenter=true&width=620&height=40&lines=Data+engineer+moving+into+AI+engineering;I+build+LLM+agents+in+Python;Everything+I+learn+gets+shipped+in+public" alt="Data engineer moving into AI engineering. I build LLM agents in Python. Everything I learn gets shipped in public.">
+  <img src="https://readme-typing-svg.demolab.com/?font=Fira+Code&weight=500&size=21&pause=1200&color=4A7DBF&center=true&vCenter=true&width=620&height=40&lines=Data+engineer+moving+into+AI+engineering;Software+Engineer+in+Applied+AI;Everything+I+learn+gets+shipped+in+public" alt="Data engineer moving into AI engineering. Software Engineer in Applied AI. Everything I learn gets shipped in public.">
 </p>
 
 <p align="center">
@@ -27,11 +27,11 @@
 
 Short version: I spent three years making sure data was right before anyone made a decision with it. Now I'm doing the same thing one layer up, for models.
 
-My current job is called Data Quality Analyst. What I actually do is find where a model gets things wrong: which field it misreads, which entities it misclassifies, how much of that would reach production if nobody checked. Around 20,000 transaction batches a week. Nobody calls it evaluation on the org chart, but that's what it is.
+My current job is called Data Quality Analyst. What I actually do is find where a model gets things wrong: which field it misreads, which entities it misclassifies, how much of that would reach production if nobody checked. Around 20,000 transaction batches a week.
 
-I don't have professional experience as an AI engineer yet, and I'd rather say that out loud than dress it up. What I do have is three years of production data work, plus the systems I'm building on my own time to close the gap: LLM pipelines, multi-agent orchestration, and the boring infrastructure that makes them survive contact with reality.
+I don't have professional experience as an AI engineer yet. What I do have is three years of production data work, plus the systems I'm building on my own time to close the gap: RAG, multi-agent orchestration, API development.
 
-Everything I build ends up here, working, with the decisions written down.
+Everything I build ends up here, working.
 
 ```python
 from dataclasses import dataclass
@@ -42,15 +42,18 @@ class Gabriel:
     now: str = "Data Quality Analyst, model evaluation in practice"
     heading: str = "AI Engineering"
     stack: tuple[str, ...] = ("Python", "FastAPI", "PostgreSQL", "Docker", "LLM agents")
-    background: tuple[str, ...] = ("3 years of data in production", "ETL", "BI")
-    education: str = "B.Sc. Data Science, FIAP"
-    languages: tuple[str, ...] = ("Portuguese (native)", "English")
+    background: tuple[str, ...] = ("3 years as Data Analyst and Engineer", "Data Transformation", "Reports", "BI")
+    education: tuple[str, ...] = (
+        "Bachelor's Degree: Data Science, FIAP",
+        "Postgraduate Degree: Software Engineer in Applied AI, UNIPDS",
+    )
+    languages: tuple[str, ...] = ("Portuguese (native)", "English (full professional proficiency)")
 
     def currently_building(self) -> str:
-        return "multi-agent systems in Python, and the tests that keep them honest"
+        return "Multi-agent systems in Python to help me generate content and engage with my social media audience."
 
     def open_to(self) -> list[str]:
-        return ["AI engineering roles", "technical conversations", "code review"]
+        return ["AI engineering roles"]
 ```
 
 ---
@@ -120,7 +123,7 @@ class Gabriel:
 
 A back-office inventory system in a monorepo: a FastAPI records API, a Next.js dashboard and a terminal client, all speaking one HTTP contract. No business rule lives in two places.
 
-I split it into three applications on purpose, and not because of scale. There is no scale here. I wanted the boundary between browser and API enforced by the build, not by my own discipline in code review.
+I split it into three applications on purpose, and not because of scale. There is no scale here. I wanted the boundary between browser and API enforced by the build.
 
 <details>
 <summary><b>Decisions worth the click</b></summary>
@@ -130,7 +133,7 @@ I split it into three applications on purpose, and not because of scale. There i
 - **One HTTP contract, three clients.** The terminal gets the same truth as the browser, because neither one owns a rule.
 - **The browser never talks to the API directly.** Requests go browser → Next.js server → FastAPI → Postgres, in that order. No CORS anywhere.
 - **Alembic migrations applied and rolled back in CI**, against a real PostgreSQL, not a mock.
-- **100 automated tests** running on Python 3.11, 3.12 and 3.13.
+- **100 automated tests** running on Python.
 - **`docker compose up` brings the whole stack online** with one command.
 
 </details>
@@ -153,7 +156,7 @@ I split it into three applications on purpose, and not because of scale. There i
 
 Eight [Agno](https://github.com/agno-agi/agno) agents that audit a LinkedIn profile, plan content and draft posts, coordinated by a team leader that delegates and synthesizes.
 
-The part I'd actually defend in an interview is the editor. It scores every draft against a seven-criteria rubric, and one of them is disqualifying: if the post claims experience the person doesn't have, the whole thing fails. It ran against my own data and rejected a draft I'd have been happy to publish, because I hadn't actually measured what the post said I'd measured. The system was right and I wasn't.
+It scores every draft against a seven-criteria rubric, and one of them is disqualifying: if the post claims experience the person doesn't have, the whole thing fails. It ran against my own data and rejected a draft I'd have been happy to publish, because I hadn't actually measured what the post said I'd measured. The system was right and I wasn't.
 
 <details>
 <summary><b>Decisions worth the click</b></summary>
@@ -175,7 +178,7 @@ The part I'd actually defend in an interview is the editor. It scores every draf
 
 #### Transcriptone: audio to structured metrics
 
-An end-to-end NLP pipeline built for a TOTVS case: Whisper for transcription, Gemini with a structured prompt extracting twelve metrics per call as validated JSON, MongoDB Atlas for storage, a Flask API and a dashboard on top.
+An end-to-end NLP pipeline built for a TOTVS case: Whisper for transcription, Gemini for analysis, MongoDB for the results.
 
 It cut call analysis from days to minutes, and it's where I learned that the hard part of an LLM pipeline isn't the model call. It's everything you build to trust the output.
 
@@ -239,7 +242,7 @@ It cut call analysis from days to minutes, and it's where I learned that the har
 
 ### Let's talk
 
-If you hire for applied AI, or you build in this space and want to argue about something on this page, the inbox is open. Technical conversation works much better on me than a generic recruiting message.
+If you hire for applied AI, or you build in this space and want to argue about something on this page, the inbox is open.
 
 <p>
   <a href="https://www.linkedin.com/in/gabriel-antoniette/">
