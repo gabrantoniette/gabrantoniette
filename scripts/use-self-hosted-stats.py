@@ -4,8 +4,12 @@
 Usage:
     python scripts/use-self-hosted-stats.py github-readme-stats-yourname.vercel.app
 
-Swaps whatever sits between the <!-- cards:start --> / <!-- cards:end --> and
-<!-- pin:start --> / <!-- pin:end --> markers. Writes README.bak.md first.
+Swaps whatever sits between the <!-- cards:start --> / <!-- cards:end -->
+markers. Writes README.bak.md first.
+
+It used to rewrite a pinned-repository card as well. That card is now part
+of the generated projects block, which scripts/update-profile.py owns, so
+this script stays out of it.
 
 Deploy walkthrough: docs/self-host-stats.md
 """
@@ -19,7 +23,6 @@ import sys
 from pathlib import Path
 
 USER = "gabrantoniette"
-PIN_REPO = "halcyon-goods-product-control"
 
 ROOT = Path(__file__).resolve().parent.parent
 README = ROOT / "README.md"
@@ -80,22 +83,6 @@ def build_cards(host: str) -> str:
     return '<p align="center">\n' + stats + "\n" + langs + "\n</p>"
 
 
-def build_pin(host: str) -> str:
-    pin = picture(
-        host,
-        "/api/pin/",
-        {"username": USER, "repo": PIN_REPO},
-        f"{PIN_REPO} repository card",
-        height="",
-    ).replace(' height=""', "")
-    return (
-        "<p>\n"
-        f'  <a href="https://github.com/{USER}/{PIN_REPO}">\n'
-        + "\n".join("  " + line for line in pin.splitlines())
-        + "\n  </a>\n</p>"
-    )
-
-
 def replace_block(text: str, name: str, new_body: str) -> str:
     pattern = re.compile(
         rf"(<!-- {name}:start -->\n).*?(\n<!-- {name}:end -->)",
@@ -117,7 +104,6 @@ def main() -> None:
 
     text = io.open(README, encoding="utf-8").read()
     text = replace_block(text, "cards", build_cards(host))
-    text = replace_block(text, "pin", build_pin(host))
 
     shutil.copyfile(README, BACKUP)
     io.open(README, "w", encoding="utf-8", newline="\n").write(text)

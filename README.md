@@ -60,6 +60,7 @@ class Gabriel:
 
 ### Stack
 
+<!-- stack:start -->
 **AI and Python**
 
 <p>
@@ -105,41 +106,47 @@ class Gabriel:
   <img src="https://img.shields.io/badge/Power_BI-F2C811?style=flat-square&logo=powerbi&logoColor=black" alt="Power BI">
 </p>
 
+**Recently picked up**
+
+<p>
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black" alt="JavaScript">
+  <img src="https://img.shields.io/badge/Node.js-5FA04E?style=flat-square&logo=nodejs&logoColor=white" alt="Node.js">
+  <img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=flat-square&logo=tensorflow&logoColor=white" alt="TensorFlow">
+</p>
+<!-- stack:end -->
+
 ---
 
 ### What I'm building
 
-#### [Halcyon Goods](https://github.com/gabrantoniette/halcyon-goods-product-control): inventory control, three ways in
+<!-- projects:start -->
+#### [Students Categorization](https://github.com/gabrantoniette/students-categorization): the encoding is the model
 
-<!-- pin:start -->
 <p>
-  <a href="https://github.com/gabrantoniette/halcyon-goods-product-control">
-    <img src="https://img.shields.io/badge/Repository-halcyon--goods--product--control-1F3864?style=flat-square&logo=github&logoColor=white" alt="halcyon-goods-product-control repository">
+  <a href="https://github.com/gabrantoniette/students-categorization">
+    <img src="https://img.shields.io/badge/Repository-students--categorization-1F3864?style=flat-square&logo=github&logoColor=white" alt="students-categorization repository">
   </a>
-  <img src="https://img.shields.io/github/languages/top/gabrantoniette/halcyon-goods-product-control?style=flat-square&color=4A7DBF" alt="Primary language of the project">
-  <img src="https://img.shields.io/github/last-commit/gabrantoniette/halcyon-goods-product-control?style=flat-square&color=4A7DBF" alt="Date of the last commit">
+  <img src="https://img.shields.io/github/languages/top/gabrantoniette/students-categorization?style=flat-square&color=4A7DBF" alt="Primary language of the project">
+  <img src="https://img.shields.io/github/last-commit/gabrantoniette/students-categorization?style=flat-square&color=4A7DBF" alt="Date of the last commit">
 </p>
-<!-- pin:end -->
 
-A back-office inventory system in a monorepo: a FastAPI records API, a Next.js dashboard and a terminal client, all speaking one HTTP contract. No business rule lives in two places.
+A neural network in JavaScript that sorts students into premium, medium and basic from age, favourite colour and location, built on TensorFlow.js running natively in Node rather than in a browser.
 
-I split it into three applications on purpose, and not because of scale. There is no scale here. I wanted the boundary between browser and API enforced by the build.
+It is deliberately unfinished, and the README says so. The data preparation is done — age normalised min-max, colour and location one-hot encoded, input and output tensors shaped `[3, 7]` and `[3, 3]`. The architecture, the training loop and the prediction are still ahead of me.
 
 <details>
 <summary><b>Decisions worth the click</b></summary>
 
 <br>
 
-- **One HTTP contract, three clients.** The terminal gets the same truth as the browser, because neither one owns a rule.
-- **The browser never talks to the API directly.** Requests go browser → Next.js server → FastAPI → Postgres, in that order. No CORS anywhere.
-- **Alembic migrations applied and rolled back in CI**, against a real PostgreSQL, not a mock.
-- **100 automated tests** running on Python.
-- **`docker compose up` brings the whole stack online** with one command.
+- **Every feature is encoded by hand.** Min-max on age, one-hot on colour and location. Nothing is handed to a library that picks the encoding for me, because that choice is where the model's assumptions actually live.
+- **Native bindings, not the browser build.** `@tensorflow/tfjs-node` runs the tensor operations against TensorFlow's native library, so the same code that would ship to a page runs at full speed on CPU.
+- **The roadmap is public and honest.** Data, encoding and tensors are checked off; architecture, training and prediction are not. A study project that claims to be finished teaches nobody anything.
 
 </details>
 
 <p>
-  <code>Python</code> <code>FastAPI</code> <code>SQLModel</code> <code>PostgreSQL</code> <code>Alembic</code> <code>Next.js</code> <code>TypeScript</code> <code>Docker</code>
+  <code>JavaScript</code> <code>TensorFlow.js</code> <code>Node.js</code>
 </p>
 
 <br>
@@ -176,7 +183,43 @@ It scores every draft against a seven-criteria rubric, and one of them is disqua
 
 <br>
 
+#### [Halcyon Goods](https://github.com/gabrantoniette/halcyon-goods-product-control): inventory control, three ways in
+
+<p>
+  <a href="https://github.com/gabrantoniette/halcyon-goods-product-control">
+    <img src="https://img.shields.io/badge/Repository-halcyon--goods--product--control-1F3864?style=flat-square&logo=github&logoColor=white" alt="halcyon-goods-product-control repository">
+  </a>
+  <img src="https://img.shields.io/github/languages/top/gabrantoniette/halcyon-goods-product-control?style=flat-square&color=4A7DBF" alt="Primary language of the project">
+  <img src="https://img.shields.io/github/last-commit/gabrantoniette/halcyon-goods-product-control?style=flat-square&color=4A7DBF" alt="Date of the last commit">
+</p>
+
+A back-office inventory system in a monorepo: a FastAPI records API, a Next.js dashboard and a terminal client, all speaking one HTTP contract. No business rule lives in two places.
+
+I split it into three applications on purpose, and not because of scale. There is no scale here. I wanted the boundary between browser and API enforced by the build.
+
+<details>
+<summary><b>Decisions worth the click</b></summary>
+
+<br>
+
+- **One HTTP contract, three clients.** The terminal gets the same truth as the browser, because neither one owns a rule.
+- **The browser never talks to the API directly.** Requests go browser → Next.js server → FastAPI → Postgres, in that order. No CORS anywhere.
+- **Alembic migrations applied and rolled back in CI**, against a real PostgreSQL, not a mock.
+- **100 automated tests** running on Python.
+- **`docker compose up` brings the whole stack online** with one command.
+
+</details>
+
+<p>
+  <code>Python</code> <code>FastAPI</code> <code>SQLModel</code> <code>PostgreSQL</code> <code>Alembic</code> <code>Next.js</code> <code>TypeScript</code> <code>Docker</code>
+</p>
+<!-- projects:end -->
+
+<br>
+
 #### Transcriptone: audio to structured metrics
+
+<sub>Earlier work, and the only project here without a public repository.</sub>
 
 An end-to-end NLP pipeline built for a TOTVS case: Whisper for transcription, Gemini for analysis, MongoDB for the results.
 
