@@ -144,11 +144,11 @@ generated block rather than being deleted.
 ```
 content/projects.toml
 content/stack.toml
-scripts/profile/github.py    # API access, eligibility, ranking
-scripts/profile/icons.py     # simple-icons fetch, cache, resolver
-scripts/profile/projects.py  # renders the projects block
-scripts/profile/stack.py     # renders the stack block
-scripts/profile/readme.py    # marker-anchored replacement, set comparison
+scripts/profilegen/github.py    # API access, eligibility, ranking
+scripts/profilegen/icons.py     # simple-icons fetch, cache, resolver
+scripts/profilegen/projects.py  # renders the projects block
+scripts/profilegen/stack.py     # renders the stack block
+scripts/profilegen/readme.py    # marker-anchored replacement, set comparison
 scripts/update-profile.py    # CLI: --check, --write, --report
 tests/                       # pytest against fixtures, no network
 ```
