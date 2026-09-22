@@ -1,0 +1,184 @@
+# Badge catalog for the generated <!-- stack:start --> block in the README.
+#
+# Detection reads languages and topics from the eligible public repositories
+# and may ADD technologies it finds. It never removes an entry listed here,
+# and it never touches a group named in `frozen`.
+#
+# Anything detected that is not already an entry below lands in the group
+# named by `new_group`, with its colour and logo resolved from simple-icons.
+# Promote it by moving it into the group you want and deleting it from
+# nowhere else -- the entry below is the only thing detection looks at.
+
+[settings]
+# A language must hold at least this share of a repository's bytes to count.
+# Below it sit Alembic's Mako templates, Next.js CSS and stray config files.
+language_threshold = 0.05
+
+# Tried, in order, when a term does not match simple-icons directly.
+suffixes = ["js", "node", "py", "cli", "api", "sdk"]
+
+# Where a newly detected technology goes until it is given a real group.
+new_group = "Recently picked up"
+
+# Group render order. A group with no technologies is not rendered at all.
+order = [
+    "AI and Python",
+    "Backend and data",
+    "Infrastructure",
+    "Frontend, when the project needs one",
+    "From the data years",
+    "Recently picked up",
+]
+
+# Detection may neither add to nor remove from these groups. "From the data
+# years" describes professional experience that leaves no trace in any
+# public repository, so no scan could ever confirm it.
+frozen = ["From the data years"]
+
+# Raw term -> catalog entry name. Checked before simple-icons, so a topic
+# that would otherwise resolve to its own badge folds into one you already
+# have. Without these, `anthropic` and `claude` would each render a second
+# badge beside "Anthropic API".
+[aliases]
+anthropic = "Anthropic API"
+claude = "Anthropic API"
+dockerfile = "Docker"
+"github-actions" = "GitHub Actions"
+
+
+# --- AI and Python -----------------------------------------------------
+
+[[tech]]
+name = "Python"
+group = "AI and Python"
+color = "3776AB"
+logo = "python"
+
+[[tech]]
+name = "Agno"
+group = "AI and Python"
+color = "1F3864"
+logo = "python"          # no brand icon of its own
+
+[[tech]]
+name = "Anthropic API"
+group = "AI and Python"
+color = "D97757"
+logo = "anthropic"
+
+[[tech]]
+name = "Pydantic"
+group = "AI and Python"
+color = "E92063"
+logo = "pydantic"
+
+[[tech]]
+name = "pytest"
+group = "AI and Python"
+color = "0A9EDC"
+logo = "pytest"
+
+
+# --- Backend and data --------------------------------------------------
+
+[[tech]]
+name = "FastAPI"
+group = "Backend and data"
+color = "009688"
+logo = "fastapi"
+
+[[tech]]
+name = "PostgreSQL"
+group = "Backend and data"
+color = "4169E1"
+logo = "postgresql"
+
+[[tech]]
+name = "SQLModel"
+group = "Backend and data"
+color = "7E56C2"
+logo = "python"          # no brand icon of its own
+
+[[tech]]
+name = "Alembic"
+group = "Backend and data"
+color = "6BA81E"
+logo = "python"          # no brand icon of its own
+
+[[tech]]
+name = "SQL"
+group = "Backend and data"
+color = "4479A1"
+logo = "postgresql"
+
+
+# --- Infrastructure ----------------------------------------------------
+
+[[tech]]
+name = "Docker"
+group = "Infrastructure"
+color = "2496ED"
+logo = "docker"
+
+[[tech]]
+name = "GitHub Actions"
+group = "Infrastructure"
+color = "2088FF"
+logo = "githubactions"
+
+[[tech]]
+name = "Git"
+group = "Infrastructure"
+color = "F05032"
+logo = "git"
+
+
+# --- Frontend ----------------------------------------------------------
+
+[[tech]]
+name = "TypeScript"
+group = "Frontend, when the project needs one"
+color = "3178C6"
+logo = "typescript"
+
+[[tech]]
+name = "Next.js"
+group = "Frontend, when the project needs one"
+color = "000000"
+logo = "nextdotjs"
+
+[[tech]]
+name = "React"
+group = "Frontend, when the project needs one"
+color = "61DAFB"
+logo = "react"
+logo_color = "black"
+
+
+# --- From the data years (frozen) --------------------------------------
+
+[[tech]]
+name = "Databricks"
+group = "From the data years"
+color = "FF3621"
+logo = "databricks"
+
+[[tech]]
+name = "Azure"
+group = "From the data years"
+color = "0078D4"
+logo = "microsoftazure"
+alt = "Microsoft Azure"
+
+[[tech]]
+name = "PySpark"
+group = "From the data years"
+color = "E25A1C"
+logo = "apachespark"
+
+[[tech]]
+name = "Power BI"
+group = "From the data years"
+color = "F2C811"
+logo = "powerbi"
+logo_color = "black"

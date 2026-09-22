@@ -1,0 +1,62 @@
+# The writing behind each project card in the generated
+# <!-- projects:start --> block.
+#
+# The three most recently worked-on public repositories are chosen by the
+# workflow, not here. This file only supplies what no API can produce: the
+# title, the headline after the colon, the narrative, the decisions behind
+# the fold, and the curated chips.
+#
+# Every field is optional, and a repository with no table at all still
+# renders. It falls back to the repository name, the GitHub description and
+# the topics that resolve to a known technology. A project is never missing
+# and never broken -- it is either rich or plain.
+
+[halcyon-goods-product-control]
+title = "Halcyon Goods"
+headline = "inventory control, three ways in"
+body = """
+A back-office inventory system in a monorepo: a FastAPI records API, a Next.js dashboard and a terminal client, all speaking one HTTP contract. No business rule lives in two places.
+
+I split it into three applications on purpose, and not because of scale. There is no scale here. I wanted the boundary between browser and API enforced by the build.
+"""
+decisions = [
+    "**One HTTP contract, three clients.** The terminal gets the same truth as the browser, because neither one owns a rule.",
+    "**The browser never talks to the API directly.** Requests go browser → Next.js server → FastAPI → Postgres, in that order. No CORS anywhere.",
+    "**Alembic migrations applied and rolled back in CI**, against a real PostgreSQL, not a mock.",
+    "**100 automated tests** running on Python.",
+    "**`docker compose up` brings the whole stack online** with one command.",
+]
+chips = ["Python", "FastAPI", "SQLModel", "PostgreSQL", "Alembic", "Next.js", "TypeScript", "Docker"]
+
+
+[linkedin-growth-agents]
+title = "LinkedIn Growth"
+headline = "a multi-agent system that writes, reviews and refuses"
+body = """
+Eight [Agno](https://github.com/agno-agi/agno) agents that audit a LinkedIn profile, plan content and draft posts, coordinated by a team leader that delegates and synthesizes.
+
+It scores every draft against a seven-criteria rubric, and one of them is disqualifying: if the post claims experience the person doesn't have, the whole thing fails. It ran against my own data and rejected a draft I'd have been happy to publish, because I hadn't actually measured what the post said I'd measured. The system was right and I wasn't.
+"""
+decisions = [
+    "**The strategy lives in one file.** Changing how eight agents behave means editing `principles.py`, not eight agent files.",
+    "**Long-term memory across conversations.** The team writes what it learns; the agents read it. Something you mention on a Tuesday reaches a different agent, in a different session, on Friday.",
+    "**146 tests, none of which call a paid API.** A spy model stands in for Claude, so the tests can assert what actually reached the prompt.",
+    "**Honesty is a hard gate, not a guideline.** No invented experience, no numbers that aren't in the source data.",
+]
+chips = ["Python", "Agno", "Anthropic API", "SQLite", "Typer", "pytest"]
+
+
+[students-categorization]
+title = "Students Categorization"
+headline = "the encoding is the model"
+body = """
+A neural network in JavaScript that sorts students into premium, medium and basic from age, favourite colour and location, built on TensorFlow.js running natively in Node rather than in a browser.
+
+It is deliberately unfinished, and the README says so. The data preparation is done — age normalised min-max, colour and location one-hot encoded, input and output tensors shaped `[3, 7]` and `[3, 3]`. The architecture, the training loop and the prediction are still ahead of me.
+"""
+decisions = [
+    "**Every feature is encoded by hand.** Min-max on age, one-hot on colour and location. Nothing is handed to a library that picks the encoding for me, because that choice is where the model's assumptions actually live.",
+    "**Native bindings, not the browser build.** `@tensorflow/tfjs-node` runs the tensor operations against TensorFlow's native library, so the same code that would ship to a page runs at full speed on CPU.",
+    "**The roadmap is public and honest.** Data, encoding and tensors are checked off; architecture, training and prediction are not. A study project that claims to be finished teaches nobody anything.",
+]
+chips = ["JavaScript", "TensorFlow.js", "Node.js"]
