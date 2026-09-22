@@ -1,0 +1,72 @@
+name: Update profile README
+
+# Regenerates the two marker-anchored blocks in README.md: the three most
+# recently worked-on public projects, and the stack detected from them.
+#
+# It opens a pull request only when one of those sets actually changed, so
+# an ordinary commit to an ordinary project produces nothing here. Dates on
+# the page do not need a run at all -- they come from live badges.
+
+on:
+  schedule:
+    - cron: "17 6 * * *"   # 03:17 in Brazil
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: update-profile
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run the tests
+        # A broken renderer must not reach the README.
+        run: |
+          python -m pip install --quiet pytest
+          python -m pytest tests/ -q
+
+      - name: Regenerate the blocks
+        id: generate
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python scripts/update-profile.py --write --report "${{ runner.temp }}/report.md"
+
+      - name: Open a pull request
+        if: steps.generate.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          branch=chore/profile-refresh
+
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git checkout -B "$branch"
+          git add README.md
+          git commit -m "chore: atualiza os projetos recentes e a stack detectada"
+          git push --force-with-lease -u origin "$branch"
+
+          # One long-lived branch, one open pull request. A second run before
+          # the first is merged updates that pull request instead of stacking
+          # another one beside it.
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --base main \
+              --head "$branch" \
+              --title "chore: atualiza os projetos recentes e a stack detectada" \
+              --body-file "${{ runner.temp }}/report.md"
+          fi
