@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-  <img src="https://readme-typing-svg.demolab.com/?font=Fira+Code&weight=500&size=21&pause=1200&color=4A7DBF&center=true&vCenter=true&width=620&height=40&lines=Data+engineer+moving+into+AI+engineering;Software+Engineer+in+Applied+AI;Everything+I+learn+gets+shipped+in+public" alt="Data engineer moving into AI engineering. Software Engineer in Applied AI. Everything I learn gets shipped in public.">
+  <img src="https://readme-typing-svg.demolab.com/?font=Fira+Code&weight=500&size=21&pause=1200&color=4A7DBF&center=true&vCenter=true&width=620&height=40&lines=Data+engineer+moving+into+AI+engineering;Postgrad+in+Software+Engineering+with+Applied+AI;Everything+I+learn+gets+shipped+in+public" alt="Data engineer moving into AI engineering. Postgrad in Software Engineering with Applied AI. Everything I learn gets shipped in public.">
 </p>
 
 <p align="center">
@@ -44,8 +44,8 @@ class Gabriel:
     stack: tuple[str, ...] = ("Python", "FastAPI", "PostgreSQL", "Docker", "LLM agents")
     background: tuple[str, ...] = ("3 years as Data Analyst and Engineer", "Data Transformation", "Reports", "BI")
     education: tuple[str, ...] = (
-        "Bachelor's Degree: Data Science, FIAP",
-        "Postgraduate Degree: Software Engineer in Applied AI, UNIPDS",
+        "Technologist Degree (2-year undergraduate): Data Science, FIAP",
+        "Postgraduate, in progress: Software Engineering with Applied AI, UNIPDS",
     )
     languages: tuple[str, ...] = ("Portuguese (native)", "English (full professional proficiency)")
 
@@ -112,6 +112,7 @@ class Gabriel:
   <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black" alt="JavaScript">
   <img src="https://img.shields.io/badge/Node.js-5FA04E?style=flat-square&logo=nodejs&logoColor=white" alt="Node.js">
   <img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=flat-square&logo=tensorflow&logoColor=white" alt="TensorFlow">
+  <img src="https://img.shields.io/badge/pandas-150458?style=flat-square&logo=pandas&logoColor=white" alt="pandas">
 </p>
 <!-- stack:end -->
 
@@ -120,7 +121,7 @@ class Gabriel:
 ### What I'm building
 
 <!-- projects:start -->
-#### [Students Categorization](https://github.com/gabrantoniette/students-categorization): the encoding is the model
+#### [Students Categorization](https://github.com/gabrantoniette/students-categorization): from a dirty CSV to a neural network
 
 <p>
   <a href="https://github.com/gabrantoniette/students-categorization">
@@ -130,23 +131,24 @@ class Gabriel:
   <img src="https://img.shields.io/github/last-commit/gabrantoniette/students-categorization?style=flat-square&color=4A7DBF" alt="Date of the last commit">
 </p>
 
-A neural network in JavaScript that sorts students into premium, medium and basic from age, favourite colour and location, built on TensorFlow.js running natively in Node rather than in a browser.
+A study project that walks the whole path of a classification problem. A Python medallion pipeline takes 10,000 rows of messy, fictional student data, validates them against a JSON data contract and encodes the 6,574 valid students as vectors for a TensorFlow.js network running in Node.
 
-It is deliberately unfinished, and the README says so. The data preparation is done — age normalised min-max, colour and location one-hot encoded, input and output tensors shaped `[3, 7]` and `[3, 3]`. The architecture, the training loop and the prediction are still ahead of me.
+The data side is done: bronze keeps the CSV as it arrived, silver applies the contract and records why each of the 3,248 rejected rows failed, and gold writes the input and output vectors. The network, the training loop and the prediction are still ahead of me, and the README says so.
 
 <details>
 <summary><b>Decisions worth the click</b></summary>
 
 <br>
 
-- **Every feature is encoded by hand.** Min-max on age, one-hot on colour and location. Nothing is handed to a library that picks the encoding for me, because that choice is where the model's assumptions actually live.
-- **Native bindings, not the browser build.** `@tensorflow/tfjs-node` runs the tensor operations against TensorFlow's native library, so the same code that would ship to a page runs at full speed on CPU.
-- **The roadmap is public and honest.** Data, encoding and tensors are checked off; architecture, training and prediction are not. A study project that claims to be finished teaches nobody anything.
+- **A contract decides what valid means.** Types, ranges, allowed values and synonyms live in one JSON file, so `sp`, `São Paulo, SP` and `sao paulo - sp` all land on `São Paulo` without an `if` in the cleaning code.
+- **Rejected rows keep their reason.** Silver never drops a bad row silently: it keeps the raw values, the source line and one error column per field, so every rejection traces back to a line of the CSV.
+- **Age is scaled by the contract, not by the data.** Min-max uses the contract's 18 to 65 bounds instead of the dataset's own minimum and maximum, so a new student at prediction time lands on the same scale as the training set.
+- **The roadmap is public and honest.** Contract, bronze, silver and gold are checked off; the network, training and prediction are not. A study project that claims to be finished teaches nobody anything.
 
 </details>
 
 <p>
-  <code>JavaScript</code> <code>TensorFlow.js</code> <code>Node.js</code>
+  <code>Python</code> <code>pandas</code> <code>TensorFlow.js</code> <code>Node.js</code> <code>JavaScript</code>
 </p>
 
 <br>
@@ -161,7 +163,7 @@ It is deliberately unfinished, and the README says so. The data preparation is d
   <img src="https://img.shields.io/github/last-commit/gabrantoniette/linkedin-growth-agents?style=flat-square&color=4A7DBF" alt="Date of the last commit">
 </p>
 
-Eight [Agno](https://github.com/agno-agi/agno) agents that audit a LinkedIn profile, plan content and draft posts, coordinated by a team leader that delegates and synthesizes.
+Nine [Agno](https://github.com/agno-agi/agno) agents that audit a LinkedIn profile, plan content, draft posts in Portuguese and English and render them as carousels, images or videos, coordinated by a team leader that delegates and synthesizes. Text goes out through LinkedIn's official API, and only after I approve it.
 
 It scores every draft against a seven-criteria rubric, and one of them is disqualifying: if the post claims experience the person doesn't have, the whole thing fails. It ran against my own data and rejected a draft I'd have been happy to publish, because I hadn't actually measured what the post said I'd measured. The system was right and I wasn't.
 
@@ -170,15 +172,15 @@ It scores every draft against a seven-criteria rubric, and one of them is disqua
 
 <br>
 
-- **The strategy lives in one file.** Changing how eight agents behave means editing `principles.py`, not eight agent files.
+- **The strategy lives in one file.** Changing how nine agents behave means editing `principles.py`, not nine agent files.
 - **Long-term memory across conversations.** The team writes what it learns; the agents read it. Something you mention on a Tuesday reaches a different agent, in a different session, on Friday.
-- **146 tests, none of which call a paid API.** A spy model stands in for Claude, so the tests can assert what actually reached the prompt.
+- **341 tests, none of which call a paid API.** A spy model stands in for Claude, so the tests can assert what actually reached the prompt.
 - **Honesty is a hard gate, not a guideline.** No invented experience, no numbers that aren't in the source data.
 
 </details>
 
 <p>
-  <code>Python</code> <code>Agno</code> <code>Anthropic API</code> <code>SQLite</code> <code>Typer</code> <code>pytest</code>
+  <code>Python</code> <code>Agno</code> <code>Anthropic API</code> <code>SQLite</code> <code>Typer</code> <code>Playwright</code> <code>pytest</code>
 </p>
 
 <br>
@@ -202,10 +204,10 @@ I split it into three applications on purpose, and not because of scale. There i
 
 <br>
 
-- **One HTTP contract, three clients.** The terminal gets the same truth as the browser, because neither one owns a rule.
-- **The browser never talks to the API directly.** Requests go browser → Next.js server → FastAPI → Postgres, in that order. No CORS anywhere.
+- **One HTTP contract, two clients.** The terminal gets the same truth as the browser, because neither one owns a rule.
+- **The browser never talks to the API directly.** Requests go browser → Next.js server → FastAPI → Postgres, in that order, so the dashboard needs no CORS and the API key never reaches the browser.
 - **Alembic migrations applied and rolled back in CI**, against a real PostgreSQL, not a mock.
-- **100 automated tests** running on Python.
+- **108 automated tests**, with the API suite running on Python 3.11, 3.12 and 3.13.
 - **`docker compose up` brings the whole stack online** with one command.
 
 </details>
@@ -221,7 +223,7 @@ I split it into three applications on purpose, and not because of scale. There i
 
 <sub>Earlier work, and the only project here without a public repository.</sub>
 
-An end-to-end NLP pipeline built for a TOTVS case: Whisper for transcription, Gemini for analysis, MongoDB for the results.
+An end-to-end NLP pipeline built with a team of four for a TOTVS case: Whisper for transcription, Gemini for analysis, MongoDB for the results.
 
 It cut call analysis from days to minutes, and it's where I learned that the hard part of an LLM pipeline isn't the model call. It's everything you build to trust the output.
 
