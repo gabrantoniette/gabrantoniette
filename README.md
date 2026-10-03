@@ -133,7 +133,7 @@ class Gabriel:
 
 A study project that walks the whole path of a classification problem. A Python medallion pipeline takes 10,000 rows of messy, fictional student data, validates them against a JSON data contract and encodes the 6,574 valid students as vectors for a TensorFlow.js network running in Node.
 
-The data side is done: bronze keeps the CSV as it arrived, silver applies the contract and records why each of the 3,248 rejected rows failed, and gold writes the input and output vectors. The network, the training loop and the prediction are still ahead of me, and the README says so.
+The whole path is done: bronze keeps the CSV as it arrived, silver applies the contract and records why each of the 3,248 rejected rows failed, gold writes the input and output vectors, and a TensorFlow.js network trains on them and predicts the category of a student. What it still doesn't do is test the model on students it has never seen, and the README says so.
 
 <details>
 <summary><b>Decisions worth the click</b></summary>
@@ -143,7 +143,7 @@ The data side is done: bronze keeps the CSV as it arrived, silver applies the co
 - **A contract decides what valid means.** Types, ranges, allowed values and synonyms live in one JSON file, so `sp`, `São Paulo, SP` and `sao paulo - sp` all land on `São Paulo` without an `if` in the cleaning code.
 - **Rejected rows keep their reason.** Silver never drops a bad row silently: it keeps the raw values, the source line and one error column per field, so every rejection traces back to a line of the CSV.
 - **Age is scaled by the contract, not by the data.** Min-max uses the contract's 18 to 65 bounds instead of the dataset's own minimum and maximum, so a new student at prediction time lands on the same scale as the training set.
-- **The roadmap is public and honest.** Contract, bronze, silver and gold are checked off; the network, training and prediction are not. A study project that claims to be finished teaches nobody anything.
+- **The roadmap is public and honest.** Contract, the three layers, training and prediction are checked off; evaluating the model on unseen students is not, and the README lists it as a known issue. A study project that claims to be finished teaches nobody anything.
 
 </details>
 
