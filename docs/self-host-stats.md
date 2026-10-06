@@ -11,7 +11,9 @@ The cards in this README depend on free instances maintained by other people. Th
 
 The README currently uses `github-profile-summary-cards`, `streak-stats.demolab.com` and `github-readme-activity-graph`, which are up. All three are still shared third-party instances — same risk, just postponed.
 
-Run your own instance of [github-readme-stats](https://github.com/anuraghazra/github-readme-stats) and the only way it goes down is if you take it down. As a bonus you get back two cards that beat the current substitutes: the official stats card and the top languages card.
+Run your own instance of [github-readme-stats](https://github.com/anuraghazra/github-readme-stats) and the only way it goes down is if you take it down. As a bonus you get back the official stats card, which beats the current substitute.
+
+The two language cards are not on that list. They are drawn by `scripts/update-profile.py` into `assets/generated/` and served from this repository, so no outside service can take them down.
 
 ## Step by step
 
@@ -54,7 +56,7 @@ You'll end up with a domain like `https://github-readme-stats-yourname.vercel.ap
 python scripts/use-self-hosted-stats.py github-readme-stats-yourname.vercel.app
 ```
 
-The script swaps the block between `<!-- cards:start -->` / `<!-- cards:end -->` for cards from your instance, already using the profile's palette (`#1F3864` / `#4A7DBF`) and wrapped in `<picture>` for light and dark themes. It writes `README.bak.md` before touching anything.
+The script swaps the block between `<!-- cards:start -->` / `<!-- cards:end -->` for the stats card from your instance, already using the profile's palette (`#1F3864` / `#4A7DBF`) and wrapped in `<picture>` for light and dark themes, beside the generated languages card it keeps. It writes `README.bak.md` before touching anything.
 
 Review the result and commit:
 
