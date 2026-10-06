@@ -11,12 +11,13 @@ from __future__ import annotations
 import tomllib
 from pathlib import Path
 
+from . import embeds
+
 REPO_BADGE = (
     "https://img.shields.io/badge/Repository-{label}-1F3864"
     "?style=flat-square&logo=github&logoColor=white"
 )
-TOP_LANGUAGE = "https://img.shields.io/github/languages/top/{user}/{name}?style=flat-square&color=4A7DBF"
-LAST_COMMIT = "https://img.shields.io/github/last-commit/{user}/{name}?style=flat-square&color=4A7DBF"
+LAST_COMMIT ="https://img.shields.io/github/last-commit/{user}/{name}?style=flat-square&color=4A7DBF"
 
 
 def load_content(path: Path) -> dict:
@@ -40,12 +41,16 @@ def card(repo, user: str, entry: dict, chips: list[str]) -> str:
         f'  <a href="{repo.url}">\n'
         f'    <img src="{REPO_BADGE.format(label=escape(repo.name))}" alt="{repo.name} repository">\n'
         "  </a>\n"
-        f'  <img src="{TOP_LANGUAGE.format(user=user, name=repo.name)}" alt="Primary language of the project">\n'
         f'  <img src="{LAST_COMMIT.format(user=user, name=repo.name)}" alt="Date of the last commit">\n'
         "</p>"
     )
 
-    parts = [heading, badges]
+    # Every language, not a badge for the top one. The top-language badge
+    # said "python" on all three cards while two of them are a third
+    # TypeScript or JavaScript.
+    languages = f"<p>\n{embeds.language_bar(repo.name, user, absolute=False, indent='  ')}\n</p>"
+
+    parts = [heading, badges, languages]
 
     body = (entry.get("body") or repo.description or "").strip()
     if body:

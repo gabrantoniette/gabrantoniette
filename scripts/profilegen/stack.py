@@ -9,7 +9,7 @@ group are true and undetectable.
 from __future__ import annotations
 
 import tomllib
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 
 from .icons import Icon, Resolver, logo_color, slug
@@ -50,14 +50,19 @@ class Catalog:
     new_group: str
     language_threshold: float
     suffixes: list[str]
+    placement: dict[str, str] = field(default_factory=dict)   # slug -> group
 
     def names(self) -> dict[str, str]:
         return {entry.name: entry.group for entry in self.tech}
 
+    def group_for(self, name: str) -> str:
+        """Where a newly detected technology goes: its placed group, or the inbox."""
+        return self.placement.get(slug(name), self.new_group)
+
 
 @dataclass
 class Report:
-    added: list[tuple[str, str]]   # (technology, how it was found)
+    added: list[tuple[str, str, str]]   # (technology, how it was found, group it landed in)
     unresolved: list[str]
 
 
@@ -87,6 +92,11 @@ def load_catalog(path: Path) -> Catalog:
         new_group=settings.get("new_group", "Recently picked up"),
         language_threshold=settings.get("language_threshold", 0.05),
         suffixes=settings.get("suffixes", []),
+        placement={
+            slug(name): group
+            for group, names in data.get("placement", {}).items()
+            for name in names
+        },
     )
 
 
@@ -119,13 +129,24 @@ def detect(repos, catalog: Catalog, resolver: Resolver) -> tuple[dict[str, str],
 
 
 def build(catalog: Catalog, found: dict[str, str], icons: dict[str, Icon]) -> tuple[dict[str, list[Tech]], Report]:
-    """Lay the catalog out by group, then append what detection turned up."""
+    """Lay the catalog out by group, then place what detection turned up.
+
+    A new technology goes to the group `[placement]` names for it, so
+    TensorFlow joins "AI and Python" the way Python did. Only a technology
+    nobody has placed falls through to `new_group`.
+    """
+    if catalog.new_group in catalog.frozen:
+        raise ValueError(f"new_group {catalog.new_group!r} cannot also be frozen")
+    placed_frozen = set(catalog.placement.values()) & catalog.frozen
+    if placed_frozen:
+        raise ValueError(f"[placement] cannot add to frozen groups: {sorted(placed_frozen)}")
+
     groups: dict[str, list[Tech]] = {name: [] for name in catalog.order}
     for entry in catalog.tech:
         groups.setdefault(entry.group, []).append(entry)
 
     known = set(catalog.names())
-    added: list[tuple[str, str]] = []
+    added: list[tuple[str, str, str]] = []
 
     for name in sorted(found):
         if name in known:
@@ -133,18 +154,17 @@ def build(catalog: Catalog, found: dict[str, str], icons: dict[str, Icon]) -> tu
         icon = icons.get(slug(name))
         if icon is None:
             continue
-        if catalog.new_group in catalog.frozen:
-            raise ValueError(f"new_group {catalog.new_group!r} cannot also be frozen")
-        groups.setdefault(catalog.new_group, []).append(
+        group = catalog.group_for(icon.title)
+        groups.setdefault(group, []).append(
             Tech(
                 name=icon.title,
-                group=catalog.new_group,
+                group=group,
                 color=icon.hex,
                 logo=icon.logo,
                 logo_color=logo_color(icon.hex),
             )
         )
-        added.append((icon.title, found[name]))
+        added.append((icon.title, found[name], group))
 
     return groups, Report(added=added, unresolved=[])
 

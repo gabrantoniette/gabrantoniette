@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from profilegen.icons import logo_color
+from profilegen.icons import Icon, logo_color, logo_slug
 
 
 def test_the_catalog_is_consulted_before_simple_icons(resolver):
@@ -12,10 +12,35 @@ def test_the_catalog_is_consulted_before_simple_icons(resolver):
 
 
 def test_exact_match_against_simple_icons(resolver):
-    """Node.js is in no catalog group yet, so it resolves on the icon alone."""
-    hit = resolver.resolve("nodejs")
-    assert hit.name == "Node.js"
+    """Vue.js is in no catalog group, so it resolves on the icon alone."""
+    hit = resolver.resolve("vuejs")
+    assert hit.name == "Vue.js"
     assert hit.via == "exact"
+
+
+def test_a_catalog_entry_still_matches_loosely(resolver):
+    """The topic is `nodejs`, the entry is "Node.js". Matching ignores the dot."""
+    assert resolver.resolve("nodejs").name == "Node.js"
+
+
+def test_an_alias_can_point_at_a_simple_icons_title(resolver):
+    """GitHub calls the language HTML; simple-icons calls the icon HTML5."""
+    hit = resolver.resolve("HTML")
+    assert hit.name == "HTML5"
+    assert hit.icon.hex == "E34F26"
+
+
+def test_logo_names_are_the_ones_shields_knows():
+    """`nodejs` rendered a Node.js badge with no logo. shields wants `nodedotjs`."""
+    assert logo_slug("Node.js") == "nodedotjs"
+    assert logo_slug("Vue.js") == "vuedotjs"
+    assert logo_slug("C++") == "cplusplus"
+    assert logo_slug("GNU Bash") == "gnubash"
+    assert Icon("Node.js", "5FA04E").logo == "nodedotjs"
+
+
+def test_simple_icons_own_slug_wins_over_the_rule():
+    assert Icon("Some Brand", "000000", explicit_slug="somebrand2").logo == "somebrand2"
 
 
 def test_alias_folds_a_topic_into_an_entry_you_already_have(resolver):

@@ -10,12 +10,17 @@ renders, so the prose and the badge cannot disagree.
 from __future__ import annotations
 
 import json
+import base64
 import os
+import re
+import urllib.error
 import urllib.request
 from dataclasses import dataclass, field
+from email.message import Message
 
-API = "https://api.github.com"
+API ="https://api.github.com"
 TIMEOUT = 45
+LAST_PAGE = re.compile(r'[?&]page=(\d+)>; rel="last"')
 
 
 @dataclass(frozen=True)
@@ -27,6 +32,14 @@ class Repo:
     default_branch: str
     last_commit: str
     languages: dict[str, int] = field(default_factory=dict)
+    commits: int = 0   # by the owner, on the default branch
+
+    def language_shares(self) -> dict[str, float]:
+        """Each language's share of the repository's bytes, as the Languages tab shows it."""
+        total = sum(self.languages.values())
+        if not total:
+            return {}
+        return {name: count / total for name, count in self.languages.items()}
 
     def significant_languages(self, threshold: float) -> list[str]:
         """Languages holding at least `threshold` of the repository's bytes.
@@ -41,7 +54,8 @@ class Repo:
         return [name for name, count in self.languages.items() if count / total >= threshold]
 
 
-def _get(path: str, token: str | None) -> object:
+def _request(path: str, token: str | None) -> tuple[object, Message]:
+    """The decoded body, and headers that look up without regard to case."""
     headers = {
         "User-Agent": "profile-readme-updater",
         "Accept": "application/vnd.github+json",
@@ -50,7 +64,39 @@ def _get(path: str, token: str | None) -> object:
         headers["Authorization"] = f"Bearer {token}"
     request = urllib.request.Request(f"{API}{path}", headers=headers)
     with urllib.request.urlopen(request, timeout=TIMEOUT) as response:
-        return json.loads(response.read().decode("utf-8"))
+        return json.loads(response.read().decode("utf-8")), response.headers
+
+
+def _get(path: str, token: str | None) -> object:
+    return _request(path, token)[0]
+
+
+def count_from(body: list, link: str) -> int:
+    """How many items a one-per-page listing holds.
+
+    With `per_page=1`, the page number of the `rel="last"` link is the
+    count, so one request answers what paginating would take hundreds for.
+    No Link header means everything fit on the one page.
+    """
+    last = LAST_PAGE.search(link or "")
+    return int(last.group(1)) if last else len(body)
+
+
+def _commits_by(user: str, name: str, branch: str, token: str | None) -> int:
+    body, headers = _request(f"/repos/{user}/{name}/commits?sha={branch}&author={user}&per_page=1", token)
+    return count_from(body, headers.get("Link", ""))
+
+
+def fetch_readme(user: str, name: str, token: str | None = None) -> str:
+    """The repository's README as text, or an empty string when it has none."""
+    token = token or os.environ.get("GITHUB_TOKEN") or None
+    try:
+        payload = _get(f"/repos/{user}/{name}/readme", token)
+    except urllib.error.HTTPError as exc:
+        if exc.code == 404:
+            return ""
+        raise
+    return base64.b64decode(payload["content"]).decode("utf-8", "replace")
 
 
 def eligible(raw: dict, user: str) -> bool:
@@ -89,6 +135,7 @@ def fetch_repos(user: str, token: str | None = None) -> list[Repo]:
                 default_branch=branch,
                 last_commit=head["commit"]["committer"]["date"],
                 languages=_get(f"/repos/{user}/{name}/languages", token),
+                commits=_commits_by(user, name, branch, token),
             )
         )
 

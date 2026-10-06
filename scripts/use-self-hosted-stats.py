@@ -11,6 +11,10 @@ It used to rewrite a pinned-repository card as well. That card is now part
 of the generated projects block, which scripts/update-profile.py owns, so
 this script stays out of it.
 
+Only the stats card moves to your instance. The languages card beside it is
+drawn by scripts/update-profile.py from every language in every public
+repository, which no hosted card does, so it stays.
+
 Deploy walkthrough: docs/self-host-stats.md
 """
 
@@ -27,6 +31,15 @@ USER = "gabrantoniette"
 ROOT = Path(__file__).resolve().parent.parent
 README = ROOT / "README.md"
 BACKUP = ROOT / "README.bak.md"
+
+GENERATED_LANGS = (
+    "  <picture>\n"
+    '    <source media="(prefers-color-scheme: dark)" srcset="assets/generated/languages-by-repo-dark.svg">\n'
+    '    <source media="(prefers-color-scheme: light)" srcset="assets/generated/languages-by-repo-light.svg">\n'
+    '    <img height="165" src="assets/generated/languages-by-repo-light.svg" '
+    'alt="Every language across my public repositories, each repository weighted equally">\n'
+    "  </picture>"
+)
 
 # Profile palette.
 DARK = {
@@ -74,13 +87,7 @@ def build_cards(host: str) -> str:
         },
         f"GitHub stats summary for {USER}",
     )
-    langs = picture(
-        host,
-        "/api/top-langs/",
-        {"username": USER, "layout": "compact", "langs_count": "8"},
-        f"Most used languages by {USER}",
-    )
-    return '<p align="center">\n' + stats + "\n" + langs + "\n</p>"
+    return '<p align="center">\n' + stats + "\n" + GENERATED_LANGS + "\n</p>"
 
 
 def replace_block(text: str, name: str, new_body: str) -> str:
