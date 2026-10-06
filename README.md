@@ -67,6 +67,7 @@ class Gabriel:
   <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python">
   <img src="https://img.shields.io/badge/Agno-1F3864?style=flat-square&logo=python&logoColor=white" alt="Agno">
   <img src="https://img.shields.io/badge/Anthropic_API-D97757?style=flat-square&logo=anthropic&logoColor=white" alt="Anthropic API">
+  <img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=flat-square&logo=tensorflow&logoColor=white" alt="TensorFlow">
   <img src="https://img.shields.io/badge/Pydantic-E92063?style=flat-square&logo=pydantic&logoColor=white" alt="Pydantic">
   <img src="https://img.shields.io/badge/pytest-0A9EDC?style=flat-square&logo=pytest&logoColor=white" alt="pytest">
 </p>
@@ -75,10 +76,12 @@ class Gabriel:
 
 <p>
   <img src="https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white" alt="FastAPI">
+  <img src="https://img.shields.io/badge/Node.js-5FA04E?style=flat-square&logo=nodedotjs&logoColor=white" alt="Node.js">
   <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white" alt="PostgreSQL">
   <img src="https://img.shields.io/badge/SQLModel-7E56C2?style=flat-square&logo=python&logoColor=white" alt="SQLModel">
   <img src="https://img.shields.io/badge/Alembic-6BA81E?style=flat-square&logo=python&logoColor=white" alt="Alembic">
   <img src="https://img.shields.io/badge/SQL-4479A1?style=flat-square&logo=postgresql&logoColor=white" alt="SQL">
+  <img src="https://img.shields.io/badge/pandas-150458?style=flat-square&logo=pandas&logoColor=white" alt="pandas">
 </p>
 
 **Infrastructure**
@@ -93,8 +96,10 @@ class Gabriel:
 
 <p>
   <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript">
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black" alt="JavaScript">
   <img src="https://img.shields.io/badge/Next.js-000000?style=flat-square&logo=nextdotjs&logoColor=white" alt="Next.js">
   <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React">
+  <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white" alt="HTML5">
 </p>
 
 **From the data years**
@@ -104,15 +109,6 @@ class Gabriel:
   <img src="https://img.shields.io/badge/Azure-0078D4?style=flat-square&logo=microsoftazure&logoColor=white" alt="Microsoft Azure">
   <img src="https://img.shields.io/badge/PySpark-E25A1C?style=flat-square&logo=apachespark&logoColor=white" alt="PySpark">
   <img src="https://img.shields.io/badge/Power_BI-F2C811?style=flat-square&logo=powerbi&logoColor=black" alt="Power BI">
-</p>
-
-**Recently picked up**
-
-<p>
-  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black" alt="JavaScript">
-  <img src="https://img.shields.io/badge/Node.js-5FA04E?style=flat-square&logo=nodejs&logoColor=white" alt="Node.js">
-  <img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=flat-square&logo=tensorflow&logoColor=white" alt="TensorFlow">
-  <img src="https://img.shields.io/badge/pandas-150458?style=flat-square&logo=pandas&logoColor=white" alt="pandas">
 </p>
 <!-- stack:end -->
 
@@ -127,8 +123,14 @@ class Gabriel:
   <a href="https://github.com/gabrantoniette/students-categorization">
     <img src="https://img.shields.io/badge/Repository-students--categorization-1F3864?style=flat-square&logo=github&logoColor=white" alt="students-categorization repository">
   </a>
-  <img src="https://img.shields.io/github/languages/top/gabrantoniette/students-categorization?style=flat-square&color=4A7DBF" alt="Primary language of the project">
   <img src="https://img.shields.io/github/last-commit/gabrantoniette/students-categorization?style=flat-square&color=4A7DBF" alt="Date of the last commit">
+</p>
+
+<p>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/generated/languages/students-categorization-dark.svg">
+    <img src="assets/generated/languages/students-categorization-light.svg" alt="Languages in students-categorization, by share of code">
+  </picture>
 </p>
 
 A study project that walks the whole path of a classification problem. A Python medallion pipeline takes 10,000 rows of messy, fictional student data, validates them against a JSON data contract and encodes the 6,574 valid students as vectors for a TensorFlow.js network running in Node.
@@ -159,8 +161,14 @@ The whole path is done: bronze keeps the CSV as it arrived, silver applies the c
   <a href="https://github.com/gabrantoniette/linkedin-growth-agents">
     <img src="https://img.shields.io/badge/Repository-linkedin--growth--agents-1F3864?style=flat-square&logo=github&logoColor=white" alt="linkedin-growth-agents repository">
   </a>
-  <img src="https://img.shields.io/github/languages/top/gabrantoniette/linkedin-growth-agents?style=flat-square&color=4A7DBF" alt="Primary language of the project">
   <img src="https://img.shields.io/github/last-commit/gabrantoniette/linkedin-growth-agents?style=flat-square&color=4A7DBF" alt="Date of the last commit">
+</p>
+
+<p>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/generated/languages/linkedin-growth-agents-dark.svg">
+    <img src="assets/generated/languages/linkedin-growth-agents-light.svg" alt="Languages in linkedin-growth-agents, by share of code">
+  </picture>
 </p>
 
 Nine [Agno](https://github.com/agno-agi/agno) agents that audit a LinkedIn profile, plan content, draft posts in Portuguese and English and render them as carousels, images or videos, coordinated by a team leader that delegates and synthesizes. Text goes out through LinkedIn's official API, and only after I approve it.
@@ -185,51 +193,28 @@ It scores every draft against a seven-criteria rubric, and one of them is disqua
 
 <br>
 
-#### [Halcyon Goods](https://github.com/gabrantoniette/halcyon-goods-product-control): inventory control, three ways in
+#### [products-recommendations](https://github.com/gabrantoniette/products-recommendations)
 
 <p>
-  <a href="https://github.com/gabrantoniette/halcyon-goods-product-control">
-    <img src="https://img.shields.io/badge/Repository-halcyon--goods--product--control-1F3864?style=flat-square&logo=github&logoColor=white" alt="halcyon-goods-product-control repository">
+  <a href="https://github.com/gabrantoniette/products-recommendations">
+    <img src="https://img.shields.io/badge/Repository-products--recommendations-1F3864?style=flat-square&logo=github&logoColor=white" alt="products-recommendations repository">
   </a>
-  <img src="https://img.shields.io/github/languages/top/gabrantoniette/halcyon-goods-product-control?style=flat-square&color=4A7DBF" alt="Primary language of the project">
-  <img src="https://img.shields.io/github/last-commit/gabrantoniette/halcyon-goods-product-control?style=flat-square&color=4A7DBF" alt="Date of the last commit">
+  <img src="https://img.shields.io/github/last-commit/gabrantoniette/products-recommendations?style=flat-square&color=4A7DBF" alt="Date of the last commit">
 </p>
 
-A back-office inventory system in a monorepo: a FastAPI records API, a Next.js dashboard and a terminal client, all speaking one HTTP contract. No business rule lives in two places.
+<p>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/generated/languages/products-recommendations-dark.svg">
+    <img src="assets/generated/languages/products-recommendations-light.svg" alt="Languages in products-recommendations, by share of code">
+  </picture>
+</p>
 
-I split it into three applications on purpose, and not because of scale. There is no scale here. I wanted the boundary between browser and API enforced by the build.
-
-<details>
-<summary><b>Decisions worth the click</b></summary>
-
-<br>
-
-- **One HTTP contract, two clients.** The terminal gets the same truth as the browser, because neither one owns a rule.
-- **The browser never talks to the API directly.** Requests go browser → Next.js server → FastAPI → Postgres, in that order, so the dashboard needs no CORS and the API key never reaches the browser.
-- **Alembic migrations applied and rolled back in CI**, against a real PostgreSQL, not a mock.
-- **108 automated tests**, with the API suite running on Python 3.11, 3.12 and 3.13.
-- **`docker compose up` brings the whole stack online** with one command.
-
-</details>
+Study project, work in progress: an in-browser e-commerce product recommendation system with TensorFlow.js. Includes user profiles, purchase history and a Web Worker pipeline for model training with tfjs-vis charts; the neural network itself is still being built.
 
 <p>
-  <code>Python</code> <code>FastAPI</code> <code>SQLModel</code> <code>PostgreSQL</code> <code>Alembic</code> <code>Next.js</code> <code>TypeScript</code> <code>Docker</code>
+  <code>JavaScript</code> <code>TensorFlow</code>
 </p>
 <!-- projects:end -->
-
-<br>
-
-#### Transcriptone: audio to structured metrics
-
-<sub>Earlier work, and the only project here without a public repository.</sub>
-
-An end-to-end NLP pipeline built with a team of four for a TOTVS case: Whisper for transcription, Gemini for analysis, MongoDB for the results.
-
-It cut call analysis from days to minutes, and it's where I learned that the hard part of an LLM pipeline isn't the model call. It's everything you build to trust the output.
-
-<p>
-  <code>Python</code> <code>Whisper</code> <code>Gemini</code> <code>MongoDB</code> <code>Flask</code>
-</p>
 
 ---
 
@@ -243,9 +228,9 @@ It cut call analysis from days to minutes, and it's where I learned that the har
     <img height="165" src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=gabrantoniette&theme=default" alt="GitHub stats summary for gabrantoniette">
   </picture>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=gabrantoniette&theme=github_dark">
-    <source media="(prefers-color-scheme: light)" srcset="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=gabrantoniette&theme=default">
-    <img height="165" src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=gabrantoniette&theme=default" alt="Most used languages by repository">
+    <source media="(prefers-color-scheme: dark)" srcset="assets/generated/languages-by-repo-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/generated/languages-by-repo-light.svg">
+    <img height="165" src="assets/generated/languages-by-repo-light.svg" alt="Every language across my public repositories, each repository weighted equally">
   </picture>
 </p>
 <!-- cards:end -->
@@ -268,9 +253,9 @@ It cut call analysis from days to minutes, and it's where I learned that the har
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=gabrantoniette&theme=github_dark">
-    <source media="(prefers-color-scheme: light)" srcset="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=gabrantoniette&theme=default">
-    <img height="165" src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=gabrantoniette&theme=default" alt="Languages by number of commits">
+    <source media="(prefers-color-scheme: dark)" srcset="assets/generated/languages-by-commit-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/generated/languages-by-commit-light.svg">
+    <img height="165" src="assets/generated/languages-by-commit-light.svg" alt="Every language across my public repositories, weighted by my commits to each">
   </picture>
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=gabrantoniette&theme=github_dark">
