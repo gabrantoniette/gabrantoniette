@@ -62,6 +62,16 @@ def test_the_live_badges_carry_the_dates(resolver):
     assert "2026" not in card
 
 
+def test_a_card_shows_every_language_not_just_the_top_one(resolver):
+    """The top-language badge read "python" on all three cards."""
+    repo = make_repo(name="demo")
+    card = projects.render([repo], "gabrantoniette", {}, resolver.resolve)
+
+    assert "languages/top" not in card
+    assert 'srcset="assets/generated/languages/demo-dark.svg"' in card
+    assert 'src="assets/generated/languages/demo-light.svg"' in card
+
+
 def test_cards_are_separated(resolver):
     repos = [make_repo(name="one"), make_repo(name="two")]
     card = projects.render(repos, "gabrantoniette", {}, resolver.resolve)

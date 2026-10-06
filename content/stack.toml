@@ -4,10 +4,10 @@
 # and may ADD technologies it finds. It never removes an entry listed here,
 # and it never touches a group named in `frozen`.
 #
-# Anything detected that is not already an entry below lands in the group
-# named by `new_group`, with its colour and logo resolved from simple-icons.
-# Promote it by moving it into the group you want and deleting it from
-# nowhere else -- the entry below is the only thing detection looks at.
+# Anything detected that is not already an entry below goes to the group
+# `[placement]` names for it, with its colour and logo resolved from
+# simple-icons. Only a technology [placement] does not mention falls through
+# to `new_group`, and the run's report says so.
 
 [settings]
 # A language must hold at least this share of a repository's bytes to count.
@@ -17,7 +17,8 @@ language_threshold = 0.05
 # Tried, in order, when a term does not match simple-icons directly.
 suffixes = ["js", "node", "py", "cli", "api", "sdk"]
 
-# Where a newly detected technology goes until it is given a real group.
+# The last resort for a technology that [placement] does not know. It stays
+# empty, and so unrendered, as long as [placement] covers what you use.
 new_group = "Recently picked up"
 
 # Group render order. A group with no technologies is not rendered at all.
@@ -39,11 +40,51 @@ frozen = ["From the data years"]
 # that would otherwise resolve to its own badge folds into one you already
 # have. Without these, `anthropic` and `claude` would each render a second
 # badge beside "Anthropic API".
+#
+# The second half maps GitHub's language names onto simple-icons titles that
+# spell them differently: GitHub says HTML and Shell, simple-icons says HTML5
+# and GNU Bash.
 [aliases]
 anthropic = "Anthropic API"
 claude = "Anthropic API"
 dockerfile = "Docker"
 "github-actions" = "GitHub Actions"
+html = "HTML5"
+shell = "GNU Bash"
+"jupyter-notebook" = "Jupyter"
+
+# Group -> the technologies that belong in it when detection first finds
+# them. Names are simple-icons titles, matched loosely, so "Node.js" also
+# catches `nodejs`. A name here that is also a [[tech]] entry below is
+# harmless: the entry wins.
+#
+# Frozen groups cannot appear here.
+[placement]
+"AI and Python" = [
+    "TensorFlow", "PyTorch", "Keras", "scikit-learn", "Hugging Face", "LangChain",
+    "LangGraph", "OpenAI", "Ollama", "Google Gemini", "Mistral AI", "Jupyter",
+    "Streamlit", "Gradio", "MLflow", "spaCy", "OpenCV", "Typer", "Poetry", "uv",
+    "Ruff",
+]
+"Backend and data" = [
+    "Flask", "Django", "Celery", "SQLAlchemy", "pandas", "NumPy", "Polars", "SciPy", "Apache Parquet", "DuckDB", "Apache Airflow",
+    "dbt", "Apache Kafka", "RabbitMQ", "Redis", "MongoDB", "MySQL", "SQLite", "MariaDB",
+    "Supabase", "Firebase", "Neo4j", "Elasticsearch", "Snowflake", "Prisma", "GraphQL",
+    "Node.js", "Express", "NestJS", "Fastify", "Deno", "Bun", "Go", "Rust", "Java",
+    "Spring", "Kotlin", "Ruby", "Ruby on Rails", "PHP", "Laravel", ".NET", "Elixir",
+    "Plotly", "Swagger", "Postman",
+]
+"Infrastructure" = [
+    "Kubernetes", "Helm", "Terraform", "Ansible", "Amazon Web Services", "Google Cloud",
+    "Vercel", "Netlify", "Render", "Fly.io", "Cloudflare", "Nginx", "Linux", "Ubuntu",
+    "GNU Bash", "PowerShell", "GitLab", "Prometheus", "Grafana", "Podman", "pre-commit",
+]
+"Frontend, when the project needs one" = [
+    "JavaScript", "HTML5", "CSS", "Sass", "Tailwind CSS", "Bootstrap", "Vue.js", "Nuxt",
+    "Svelte", "Angular", "Astro", "Remix", "Vite", "Webpack", "Redux", "Chart.js",
+    "D3.js", "Three.js", "Storybook", "Jest", "Vitest", "Playwright", "Cypress", "npm",
+    "pnpm", "Yarn",
+]
 
 
 # --- AI and Python -----------------------------------------------------
@@ -67,6 +108,12 @@ color = "D97757"
 logo = "anthropic"
 
 [[tech]]
+name = "TensorFlow"
+group = "AI and Python"
+color = "FF6F00"
+logo = "tensorflow"
+
+[[tech]]
 name = "Pydantic"
 group = "AI and Python"
 color = "E92063"
@@ -86,6 +133,12 @@ name = "FastAPI"
 group = "Backend and data"
 color = "009688"
 logo = "fastapi"
+
+[[tech]]
+name = "Node.js"
+group = "Backend and data"
+color = "5FA04E"
+logo = "nodedotjs"
 
 [[tech]]
 name = "PostgreSQL"
@@ -110,6 +163,12 @@ name = "SQL"
 group = "Backend and data"
 color = "4479A1"
 logo = "postgresql"
+
+[[tech]]
+name = "pandas"
+group = "Backend and data"
+color = "150458"
+logo = "pandas"
 
 
 # --- Infrastructure ----------------------------------------------------
@@ -140,6 +199,13 @@ name = "TypeScript"
 group = "Frontend, when the project needs one"
 color = "3178C6"
 logo = "typescript"
+
+[[tech]]
+name = "JavaScript"
+group = "Frontend, when the project needs one"
+color = "F7DF1E"
+logo = "javascript"
+logo_color = "black"
 
 [[tech]]
 name = "Next.js"

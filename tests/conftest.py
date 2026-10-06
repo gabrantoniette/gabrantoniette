@@ -35,6 +35,9 @@ def icon_catalog() -> dict[str, icons.Icon]:
             ("React", "61DAFB"),
             ("Anthropic", "191919"),
             ("Claude", "D97757"),
+            ("HTML5", "E34F26"),
+            ("Vue.js", "4FC08D"),
+            ("Elm", "1293D8"),
         ]
     }
 
@@ -56,6 +59,7 @@ def make_repo(
     topics: tuple[str, ...] = (),
     languages: dict[str, int] | None = None,
     last_commit: str = "2026-09-22T00:00:00Z",
+    commits: int = 0,
 ) -> github.Repo:
     return github.Repo(
         name=name,
@@ -65,4 +69,5 @@ def make_repo(
         default_branch="main",
         last_commit=last_commit,
         languages=languages or {},
+        commits=commits,
     )

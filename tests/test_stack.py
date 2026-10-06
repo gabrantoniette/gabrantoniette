@@ -31,14 +31,64 @@ def test_detection_reports_what_it_could_not_place(catalog, resolver):
     assert unresolved == ["one-hot-encoding", "tfjs-node"]
 
 
-def test_new_technology_lands_in_the_entry_group(catalog, resolver, icon_catalog):
-    repo = make_repo(topics=("tensorflowjs",), languages={"JavaScript": 1476})
+def test_a_new_technology_lands_in_its_placed_group(catalog, resolver, icon_catalog):
+    """HTML joins the frontend group the way Python sits in "AI and Python"."""
+    repo = make_repo(topics=("vuejs",), languages={"JavaScript": 8000, "HTML": 2000})
     found, _ = stack.detect([repo], catalog, resolver)
     groups, report = stack.build(catalog, found, icon_catalog)
 
-    placed = [entry.name for entry in groups[catalog.new_group]]
-    assert placed == ["JavaScript", "TensorFlow"]
-    assert [name for name, _ in report.added] == ["JavaScript", "TensorFlow"]
+    frontend = [entry.name for entry in groups["Frontend, when the project needs one"]]
+    assert frontend[-2:] == ["HTML5", "Vue.js"]
+    assert not groups[catalog.new_group]
+    assert [(name, group) for name, _, group in report.added] == [
+        ("HTML5", "Frontend, when the project needs one"),
+        ("Vue.js", "Frontend, when the project needs one"),
+    ]
+
+
+def test_a_placed_technology_gets_the_logo_shields_knows(catalog, resolver, icon_catalog):
+    found, _ = stack.detect([make_repo(topics=("vuejs",))], catalog, resolver)
+    groups, _ = stack.build(catalog, found, icon_catalog)
+    rendered = stack.render(catalog, groups)
+    assert "logo=vuedotjs" in rendered
+
+
+def test_only_an_unplaced_technology_falls_through_to_the_inbox(catalog, resolver, icon_catalog):
+    found, _ = stack.detect([make_repo(topics=("elm",))], catalog, resolver)
+    groups, report = stack.build(catalog, found, icon_catalog)
+
+    assert [entry.name for entry in groups[catalog.new_group]] == ["Elm"]
+    assert report.added[0][2] == catalog.new_group
+
+
+def test_what_used_to_be_recently_picked_up_has_a_real_group(catalog):
+    """The four badges that sat in the inbox, now where they belong."""
+    groups = catalog.names()
+    assert groups["TensorFlow"] == "AI and Python"
+    assert groups["Node.js"] == "Backend and data"
+    assert groups["pandas"] == "Backend and data"
+    assert groups["JavaScript"] == "Frontend, when the project needs one"
+
+
+def test_the_inbox_renders_nothing_for_what_the_repositories_hold_today(catalog, resolver, icon_catalog):
+    """Every language and topic of the current projects has a real group."""
+    repos = [
+        make_repo(languages={"Python": 21010, "JavaScript": 5295},
+                  topics=("javascript", "nodejs", "pandas", "python", "tensorflowjs")),
+        make_repo(languages={"JavaScript": 29745, "HTML": 4886, "CSS": 1235},
+                  topics=("javascript", "tensorflowjs", "tfjs-vis", "web-worker")),
+        make_repo(languages={"Python": 506464, "TypeScript": 237574},
+                  topics=("agno", "anthropic", "claude", "nextjs", "python")),
+    ]
+    found, _ = stack.detect(repos, catalog, resolver)
+    groups, _ = stack.build(catalog, found, icon_catalog)
+    assert "Recently picked up" not in stack.render(catalog, groups)
+
+
+def test_placement_cannot_reach_into_a_frozen_group(catalog, icon_catalog):
+    catalog.placement["elm"] = "From the data years"
+    with pytest.raises(ValueError, match="frozen"):
+        stack.build(catalog, {}, icon_catalog)
 
 
 def test_detection_never_removes_an_undetectable_entry(catalog, resolver, icon_catalog):

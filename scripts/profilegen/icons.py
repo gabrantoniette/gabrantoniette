@@ -11,26 +11,46 @@ from __future__ import annotations
 
 import json
 import re
+import unicodedata
 import urllib.request
 from dataclasses import dataclass
 
 CATALOG_URL = "https://raw.githubusercontent.com/simple-icons/simple-icons/master/data/simple-icons.json"
 TIMEOUT = 45
 
+# simple-icons spells these out when it turns a title into a logo name.
+SPELLED = (("+", "plus"), (".", "dot"), ("&", "and"), ("đ", "d"), ("ħ", "h"), ("ı", "i"),
+           ("ĸ", "k"), ("ŀ", "l"), ("ł", "l"), ("ß", "ss"), ("ŧ", "t"))
+
 
 def slug(text: str) -> str:
-    """Reduce a name to the form simple-icons uses to key its icons."""
+    """Reduce a name to a matching key, loose enough that `nodejs` finds Node.js."""
     return re.sub(r"[^a-z0-9]", "", text.lower())
+
+
+def logo_slug(title: str) -> str:
+    """The logo name shields.io accepts, which is simple-icons' own slug.
+
+    It is not `slug()`. Dropping the dot turned Node.js into `nodejs`, which
+    shields does not know, and the badge rendered with no logo at all. The
+    real name is `nodedotjs`.
+    """
+    text = title.lower()
+    for char, spelled in SPELLED:
+        text = text.replace(char, spelled)
+    text = "".join(c for c in unicodedata.normalize("NFD", text) if not unicodedata.combining(c))
+    return re.sub(r"[^a-z0-9]", "", text)
 
 
 @dataclass(frozen=True)
 class Icon:
     title: str
     hex: str
+    explicit_slug: str = ""   # set by simple-icons when the rule above would get it wrong
 
     @property
     def logo(self) -> str:
-        return slug(self.title)
+        return self.explicit_slug or logo_slug(self.title)
 
 
 @dataclass(frozen=True)
@@ -60,7 +80,10 @@ def fetch_catalog(url: str = CATALOG_URL, timeout: int = TIMEOUT) -> dict[str, I
     icons = payload["icons"] if isinstance(payload, dict) else payload
     if not icons:
         raise RuntimeError("simple-icons returned an empty catalog")
-    return {slug(icon["title"]): Icon(icon["title"], icon["hex"]) for icon in icons}
+    return {
+        slug(icon["title"]): Icon(icon["title"], icon["hex"], icon.get("slug", ""))
+        for icon in icons
+    }
 
 
 class Resolver:
