@@ -135,7 +135,7 @@ class Gabriel:
 
 A study project that walks the whole path of a classification problem. A Python medallion pipeline takes 10,000 rows of messy, fictional student data, validates them against a JSON data contract and encodes the 6,574 valid students as vectors for a TensorFlow.js network running in Node.
 
-The whole path is done: bronze keeps the CSV as it arrived, silver applies the contract and records why each of the 3,248 rejected rows failed, gold writes the input and output vectors, and a TensorFlow.js network trains on them and predicts the category of a student. What it still doesn't do is test the model on students it has never seen, and the README says so.
+The whole path is done: bronze keeps the CSV as it arrived, silver applies the contract and records why each of the 3,248 rejected rows failed, gold writes the input and output vectors, and a TensorFlow.js network trains on them. Students who sign up later take the same path in files of their own, and the network suggests a category for each of them. What it still doesn't do is test the model on students it has never seen, and the README says so.
 
 <details>
 <summary><b>Decisions worth the click</b></summary>
@@ -145,7 +145,8 @@ The whole path is done: bronze keeps the CSV as it arrived, silver applies the c
 - **A contract decides what valid means.** Types, ranges, allowed values and synonyms live in one JSON file, so `sp`, `São Paulo, SP` and `sao paulo - sp` all land on `São Paulo` without an `if` in the cleaning code.
 - **Rejected rows keep their reason.** Silver never drops a bad row silently: it keeps the raw values, the source line and one error column per field, so every rejection traces back to a line of the CSV.
 - **Age is scaled by the contract, not by the data.** Min-max uses the contract's 18 to 65 bounds instead of the dataset's own minimum and maximum, so a new student at prediction time lands on the same scale as the training set.
-- **The roadmap is public and honest.** Contract, the three layers, training and prediction are checked off; evaluating the model on unseen students is not, and the README lists it as a known issue. A study project that claims to be finished teaches nobody anything.
+- **The sign-up time is the watermark.** A run reads the whole file of new students but adds only the ones who signed up after the last student already in, so running it twice adds nothing. Every line that stays out goes to a quarantine file once, with its reason: invalid, empty, duplicate or late.
+- **The roadmap is public and honest.** Contract, the three layers, training, new students and their categories are checked off; evaluating the model on unseen students is not, and the README lists it as a known issue. A study project that claims to be finished teaches nobody anything.
 
 </details>
 
@@ -171,7 +172,7 @@ The whole path is done: bronze keeps the CSV as it arrived, silver applies the c
   </picture>
 </p>
 
-Nine [Agno](https://github.com/agno-agi/agno) agents that audit a LinkedIn profile, plan content, draft posts in Portuguese and English and render them as carousels, images or videos, coordinated by a team leader that delegates and synthesizes. Text goes out through LinkedIn's official API, and only after I approve it.
+Ten [Agno](https://github.com/agno-agi/agno) agents that audit a LinkedIn profile, plan content, draft posts in Portuguese and English and render them as carousels, images or videos, coordinated by a team leader that delegates and synthesizes. Text goes out through LinkedIn's official API, and only after I approve it. Once a post has numbers, an analyst reads them and proposes what to change.
 
 It scores every draft against a seven-criteria rubric, and one of them is disqualifying: if the post claims experience the person doesn't have, the whole thing fails. It ran against my own data and rejected a draft I'd have been happy to publish, because I hadn't actually measured what the post said I'd measured. The system was right and I wasn't.
 
@@ -180,9 +181,9 @@ It scores every draft against a seven-criteria rubric, and one of them is disqua
 
 <br>
 
-- **The strategy lives in one file.** Changing how nine agents behave means editing `principles.py`, not nine agent files.
+- **The strategy lives in one file.** Changing how ten agents behave means editing `principles.py`, not ten agent files.
 - **Long-term memory across conversations.** The team writes what it learns; the agents read it. Something you mention on a Tuesday reaches a different agent, in a different session, on Friday.
-- **341 tests, none of which call a paid API.** A spy model stands in for Claude, so the tests can assert what actually reached the prompt.
+- **389 tests, none of which call a paid API.** A spy model stands in for Claude, so the tests can assert what actually reached the prompt.
 - **Honesty is a hard gate, not a guideline.** No invented experience, no numbers that aren't in the source data.
 
 </details>
@@ -193,7 +194,7 @@ It scores every draft against a seven-criteria rubric, and one of them is disqua
 
 <br>
 
-#### [products-recommendations](https://github.com/gabrantoniette/products-recommendations)
+#### [Products Recommendations](https://github.com/gabrantoniette/products-recommendations): a recommender that will train in the browser
 
 <p>
   <a href="https://github.com/gabrantoniette/products-recommendations">
@@ -209,10 +210,12 @@ It scores every draft against a seven-criteria rubric, and one of them is disqua
   </picture>
 </p>
 
-Study project, work in progress: an in-browser e-commerce product recommendation system with TensorFlow.js. Includes user profiles, purchase history and a Web Worker pipeline for model training with tfjs-vis charts; the neural network itself is still being built.
+An e-commerce page that runs entirely in the browser: pick a customer, see what they bought, buy something else. Those purchases are the data a TensorFlow.js network will learn to recommend products from, in a Web Worker so the page never freezes, with tfjs-vis wired up to chart the training.
+
+It's early. The page, the purchase tracking and the worker plumbing run; the network doesn't exist yet, and the training step is a placeholder that reports progress without learning anything. The README says so in its opening lines.
 
 <p>
-  <code>JavaScript</code> <code>TensorFlow</code>
+  <code>JavaScript</code> <code>TensorFlow.js</code> <code>tfjs-vis</code> <code>Web Workers</code> <code>Bootstrap</code>
 </p>
 <!-- projects:end -->
 
@@ -265,7 +268,7 @@ Study project, work in progress: an in-browser e-commerce product recommendation
 </p>
 
 <p align="center">
-  <sub>Some of my work lives in private repositories, so the graph tells part of the story, not all of it.</sub>
+  <sub>Some of my work lives in private repositories, so these charts tell part of the story, not all of it.</sub>
 </p>
 
 ---
@@ -283,4 +286,4 @@ If you hire for applied AI, or you build in this space and want to argue about s
   </a>
 </p>
 
-<sub>Stats cards are served by third-party open source projects. To host your own, see <a href="docs/self-host-stats.md">docs/self-host-stats.md</a>.</sub>
+<sub>The language charts and the project language bars are drawn by this repository from my public repositories. The other stats cards are served by third-party open source projects. To host your own, see <a href="docs/self-host-stats.md">docs/self-host-stats.md</a>.</sub>
