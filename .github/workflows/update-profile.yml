@@ -1,15 +1,23 @@
 name: Update profile README
 
-# Regenerates the two marker-anchored blocks in README.md: the three most
-# recently worked-on public projects, and the stack detected from them.
+# Regenerates everything on the profile that comes from the repositories:
+# the three most recently worked-on public projects, the stack detected from
+# them, the two language donuts and one language bar per public repository.
 #
-# It opens a pull request only when one of those sets actually changed, so
-# an ordinary commit to an ordinary project produces nothing here. Dates on
-# the page do not need a run at all -- they come from live badges.
+# It opens a pull request only when something actually changed, and keeps a
+# single one open: a later run updates it instead of stacking another beside
+# it. Dates on the page do not need a run at all -- they come from live
+# badges.
 
 on:
   schedule:
-    - cron: "17 6 * * *"   # 03:17 in Brazil
+    - cron: "17 * * * *"   # every hour
+  push:
+    branches: [main]
+    paths:
+      - "content/**"
+      - "scripts/**"
+      - ".github/workflows/update-profile.yml"
   workflow_dispatch:
 
 permissions:
@@ -37,7 +45,7 @@ jobs:
           python -m pip install --quiet pytest
           python -m pytest tests/ -q
 
-      - name: Regenerate the blocks
+      - name: Regenerate
         id: generate
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -56,17 +64,28 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           git checkout -B "$branch"
-          git add README.md
-          git commit -m "chore: atualiza os projetos recentes e a stack detectada"
-          git push --force-with-lease -u origin "$branch"
+          git add README.md assets/generated
+          git commit -m "chore: atualiza o perfil a partir dos repositorios"
 
           # One long-lived branch, one open pull request. A second run before
           # the first is merged updates that pull request instead of stacking
           # another one beside it.
-          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+          open=$(gh pr list --head "$branch" --state open --json number --jq '.[].number')
+
+          # Until that pull request is merged, main stays behind it and every
+          # run finds the same change again. Push only when it is new.
+          if [ -n "$open" ] && git fetch --quiet origin "$branch" && git diff --quiet FETCH_HEAD HEAD; then
+            echo "pull request #$open already holds this change"
+            exit 0
+          fi
+          git push --force -u origin "$branch"
+
+          if [ -z "$open" ]; then
             gh pr create \
               --base main \
               --head "$branch" \
-              --title "chore: atualiza os projetos recentes e a stack detectada" \
+              --title "chore: atualiza o perfil a partir dos repositorios" \
               --body-file "${{ runner.temp }}/report.md"
+          else
+            gh pr edit "$open" --body-file "${{ runner.temp }}/report.md"
           fi
