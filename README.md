@@ -117,6 +117,32 @@ class Gabriel:
 ### What I'm building
 
 <!-- projects:start -->
+#### [Products Recommendations](https://github.com/gabrantoniette/products-recommendations): a recommender that will train in the browser
+
+<p>
+  <a href="https://github.com/gabrantoniette/products-recommendations">
+    <img src="https://img.shields.io/badge/Repository-products--recommendations-1F3864?style=flat-square&logo=github&logoColor=white" alt="products-recommendations repository">
+  </a>
+  <img src="https://img.shields.io/github/last-commit/gabrantoniette/products-recommendations?style=flat-square&color=4A7DBF" alt="Date of the last commit">
+</p>
+
+<p>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/generated/languages/products-recommendations-dark.svg">
+    <img src="assets/generated/languages/products-recommendations-light.svg" alt="Languages in products-recommendations, by share of code">
+  </picture>
+</p>
+
+An e-commerce page that runs entirely in the browser: pick a customer, see what they bought, buy something else. Those purchases are the data a TensorFlow.js network will learn to recommend products from, in a Web Worker so the page never freezes, with tfjs-vis wired up to chart the training.
+
+It's early. The page, the purchase tracking and the worker plumbing run; the network doesn't exist yet, and the training step is a placeholder that reports progress without learning anything. The README says so in its opening lines.
+
+<p>
+  <code>JavaScript</code> <code>TensorFlow.js</code> <code>tfjs-vis</code> <code>Web Workers</code> <code>Bootstrap</code>
+</p>
+
+<br>
+
 #### [Students Categorization](https://github.com/gabrantoniette/students-categorization): from a dirty CSV to a neural network
 
 <p>
@@ -156,66 +182,41 @@ The whole path is done: bronze keeps the CSV as it arrived, silver applies the c
 
 <br>
 
-#### [LinkedIn Growth](https://github.com/gabrantoniette/linkedin-growth-agents): a multi-agent system that writes, reviews and refuses
+#### [Halcyon Goods](https://github.com/gabrantoniette/halcyon-goods-product-control): inventory control, three ways in
 
 <p>
-  <a href="https://github.com/gabrantoniette/linkedin-growth-agents">
-    <img src="https://img.shields.io/badge/Repository-linkedin--growth--agents-1F3864?style=flat-square&logo=github&logoColor=white" alt="linkedin-growth-agents repository">
+  <a href="https://github.com/gabrantoniette/halcyon-goods-product-control">
+    <img src="https://img.shields.io/badge/Repository-halcyon--goods--product--control-1F3864?style=flat-square&logo=github&logoColor=white" alt="halcyon-goods-product-control repository">
   </a>
-  <img src="https://img.shields.io/github/last-commit/gabrantoniette/linkedin-growth-agents?style=flat-square&color=4A7DBF" alt="Date of the last commit">
+  <img src="https://img.shields.io/github/last-commit/gabrantoniette/halcyon-goods-product-control?style=flat-square&color=4A7DBF" alt="Date of the last commit">
 </p>
 
 <p>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/generated/languages/linkedin-growth-agents-dark.svg">
-    <img src="assets/generated/languages/linkedin-growth-agents-light.svg" alt="Languages in linkedin-growth-agents, by share of code">
+    <source media="(prefers-color-scheme: dark)" srcset="assets/generated/languages/halcyon-goods-product-control-dark.svg">
+    <img src="assets/generated/languages/halcyon-goods-product-control-light.svg" alt="Languages in halcyon-goods-product-control, by share of code">
   </picture>
 </p>
 
-Ten [Agno](https://github.com/agno-agi/agno) agents that audit a LinkedIn profile, plan content, draft posts in Portuguese and English and render them as carousels, images or videos, coordinated by a team leader that delegates and synthesizes. Text goes out through LinkedIn's official API, and only after I approve it. Once a post has numbers, an analyst reads them and proposes what to change.
+A back-office inventory system in a monorepo: a FastAPI records API, a Next.js dashboard and a terminal client, all speaking one HTTP contract. No business rule lives in two places.
 
-It scores every draft against a seven-criteria rubric, and one of them is disqualifying: if the post claims experience the person doesn't have, the whole thing fails. It ran against my own data and rejected a draft I'd have been happy to publish, because I hadn't actually measured what the post said I'd measured. The system was right and I wasn't.
+I split it into three applications on purpose, and not because of scale. There is no scale here. I wanted the boundary between browser and API enforced by the build.
 
 <details>
 <summary><b>Decisions worth the click</b></summary>
 
 <br>
 
-- **The strategy lives in one file.** Changing how ten agents behave means editing `principles.py`, not ten agent files.
-- **Long-term memory across conversations.** The team writes what it learns; the agents read it. Something you mention on a Tuesday reaches a different agent, in a different session, on Friday.
-- **389 tests, none of which call a paid API.** A spy model stands in for Claude, so the tests can assert what actually reached the prompt.
-- **Honesty is a hard gate, not a guideline.** No invented experience, no numbers that aren't in the source data.
+- **One HTTP contract, two clients.** The terminal gets the same truth as the browser, because neither one owns a rule.
+- **The browser never talks to the API directly.** Requests go browser → Next.js server → FastAPI → Postgres, in that order, so the dashboard needs no CORS and the API key never reaches the browser.
+- **Alembic migrations applied and rolled back in CI**, against a real PostgreSQL, not a mock.
+- **108 automated tests**, with the API suite running on Python 3.11, 3.12 and 3.13.
+- **`docker compose up` brings the whole stack online** with one command.
 
 </details>
 
 <p>
-  <code>Python</code> <code>Agno</code> <code>Anthropic API</code> <code>SQLite</code> <code>Typer</code> <code>Playwright</code> <code>pytest</code>
-</p>
-
-<br>
-
-#### [Products Recommendations](https://github.com/gabrantoniette/products-recommendations): a recommender that will train in the browser
-
-<p>
-  <a href="https://github.com/gabrantoniette/products-recommendations">
-    <img src="https://img.shields.io/badge/Repository-products--recommendations-1F3864?style=flat-square&logo=github&logoColor=white" alt="products-recommendations repository">
-  </a>
-  <img src="https://img.shields.io/github/last-commit/gabrantoniette/products-recommendations?style=flat-square&color=4A7DBF" alt="Date of the last commit">
-</p>
-
-<p>
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/generated/languages/products-recommendations-dark.svg">
-    <img src="assets/generated/languages/products-recommendations-light.svg" alt="Languages in products-recommendations, by share of code">
-  </picture>
-</p>
-
-An e-commerce page that runs entirely in the browser: pick a customer, see what they bought, buy something else. Those purchases are the data a TensorFlow.js network will learn to recommend products from, in a Web Worker so the page never freezes, with tfjs-vis wired up to chart the training.
-
-It's early. The page, the purchase tracking and the worker plumbing run; the network doesn't exist yet, and the training step is a placeholder that reports progress without learning anything. The README says so in its opening lines.
-
-<p>
-  <code>JavaScript</code> <code>TensorFlow.js</code> <code>tfjs-vis</code> <code>Web Workers</code> <code>Bootstrap</code>
+  <code>Python</code> <code>FastAPI</code> <code>SQLModel</code> <code>PostgreSQL</code> <code>Alembic</code> <code>Next.js</code> <code>TypeScript</code> <code>Docker</code>
 </p>
 <!-- projects:end -->
 
