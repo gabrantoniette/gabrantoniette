@@ -31,7 +31,7 @@ from profilegen import charts, embeds, github, icons, languages, projects, readm
 
 USER = "gabrantoniette"
 TOP_N = 3
-CHART_LIMIT = 8   # legend rows a 340x200 card holds; past that, "Other"
+CHART_LIMIT = 3   # the donuts show only the leading languages
 
 ROOT = Path(__file__).resolve().parent.parent
 README = ROOT / "README.md"
@@ -49,7 +49,7 @@ def assets_for(repos, colors: dict[str, str]) -> dict[Path, str]:
     for theme in charts.CARD_THEMES:
         for kind, (title, shares) in charts_by.items():
             files[ROOT / embeds.chart_path(kind, theme)] = charts.donut_card(
-                title, languages.fold(shares, CHART_LIMIT), colors, theme
+                title, languages.top(shares, CHART_LIMIT), colors, theme
             )
         for repo in repos:
             if repo.languages:

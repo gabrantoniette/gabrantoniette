@@ -234,7 +234,7 @@ It's early. The page, the purchase tracking and the worker plumbing run; the net
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/generated/languages-by-repo-dark.svg">
     <source media="(prefers-color-scheme: light)" srcset="assets/generated/languages-by-repo-light.svg">
-    <img height="165" src="assets/generated/languages-by-repo-light.svg" alt="Every language across my public repositories, each repository weighted equally">
+    <img height="165" src="assets/generated/languages-by-repo-light.svg" alt="The three most used languages across my public repositories, each repository weighted equally">
   </picture>
 </p>
 <!-- cards:end -->
@@ -259,7 +259,7 @@ It's early. The page, the purchase tracking and the worker plumbing run; the net
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/generated/languages-by-commit-dark.svg">
     <source media="(prefers-color-scheme: light)" srcset="assets/generated/languages-by-commit-light.svg">
-    <img height="165" src="assets/generated/languages-by-commit-light.svg" alt="Every language across my public repositories, weighted by my commits to each">
+    <img height="165" src="assets/generated/languages-by-commit-light.svg" alt="The three most used languages across my public repositories, weighted by my commits to each">
   </picture>
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=gabrantoniette&theme=github_dark">

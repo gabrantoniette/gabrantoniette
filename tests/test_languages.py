@@ -79,17 +79,17 @@ def test_empty_input_draws_nothing():
     assert languages.by_commit([make_repo(languages={"Python": 1}, commits=0)]) == []
 
 
-def test_fold_keeps_the_limit_and_sums_the_rest_into_other():
-    shares = [(f"L{i}", 0.1) for i in range(10)]
-    folded = languages.fold(shares, 8)
-    assert len(folded) == 8
-    assert folded[-1][0] == "Other"
-    assert folded[-1][1] == pytest.approx(0.3)
+def test_top_keeps_the_leaders_and_rescales_them_to_close_the_ring():
+    shares = [("Python", 0.5), ("JavaScript", 0.2), ("TypeScript", 0.1), ("HTML", 0.1), ("CSS", 0.1)]
+    kept = languages.top(shares, 3)
+    assert [name for name, _ in kept] == ["Python", "JavaScript", "TypeScript"]
+    assert sum(share for _, share in kept) == pytest.approx(1.0)
+    assert kept[0][1] == pytest.approx(0.625)
 
 
-def test_fold_leaves_a_short_list_alone():
+def test_top_leaves_a_short_list_alone():
     shares = [("Python", 0.7), ("JavaScript", 0.3)]
-    assert languages.fold(shares, 8) == shares
+    assert languages.top(shares, 3) == shares
 
 
 def test_percent_reads_like_the_languages_tab():
