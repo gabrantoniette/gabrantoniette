@@ -72,9 +72,10 @@ JavaScript.
   bytes. Attributing each commit to the files it touched would cost one API
   call per commit; this costs one per repository.
 
-Each donut shows up to eight languages, every one named in the legend with
-its share, so a slice too thin to see still says what it is. A ninth and
-beyond fold into *Other*. Colours are GitHub's own, from
+Each donut shows only the three leading languages, named in the legend with
+their share. The rest are left out rather than folded into *Other*, and the
+three are rescaled to each other so the ring still closes. The limit is
+`CHART_LIMIT` in `scripts/update-profile.py`. Colours are GitHub's own, from
 [linguist](https://github.com/github-linguist/linguist).
 
 ## The language bar in each project's README

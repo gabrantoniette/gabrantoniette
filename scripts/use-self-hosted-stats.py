@@ -37,7 +37,7 @@ GENERATED_LANGS = (
     '    <source media="(prefers-color-scheme: dark)" srcset="assets/generated/languages-by-repo-dark.svg">\n'
     '    <source media="(prefers-color-scheme: light)" srcset="assets/generated/languages-by-repo-light.svg">\n'
     '    <img height="165" src="assets/generated/languages-by-repo-light.svg" '
-    'alt="Every language across my public repositories, each repository weighted equally">\n'
+    'alt="The three most used languages across my public repositories, each repository weighted equally">\n'
     "  </picture>"
 )
 

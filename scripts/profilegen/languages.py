@@ -17,7 +17,6 @@ import urllib.request
 LINGUIST_URL = "https://raw.githubusercontent.com/github-linguist/linguist/main/lib/linguist/languages.yml"
 TIMEOUT = 45
 FALLBACK_COLOR = "#8b949e"   # what GitHub paints a language linguist gives no colour
-OTHER = "Other"
 
 _NAME = re.compile(r"^([^\s#-][^:]*):\s*$")
 _COLOR = re.compile(r'^  color:\s*"(#[0-9a-fA-F]{6})"')
@@ -94,12 +93,17 @@ def by_commit(repos) -> list[tuple[str, float]]:
     return ranked(totals)
 
 
-def fold(shares: list[tuple[str, float]], limit: int) -> list[tuple[str, float]]:
-    """Keep `limit` entries, folding the smallest into "Other" past that."""
-    if len(shares) <= limit:
-        return shares
-    kept = shares[: limit - 1]
-    return kept + [(OTHER, sum(share for _, share in shares[limit - 1 :]))]
+def top(shares: list[tuple[str, float]], limit: int) -> list[tuple[str, float]]:
+    """Keep the `limit` largest entries, rescaled so the ring still closes.
+
+    The rest are dropped rather than folded into an "Other" slice: the card
+    answers which languages lead, and their shares are read against each other.
+    """
+    kept = shares[:limit]
+    whole = sum(share for _, share in kept)
+    if not whole:
+        return kept
+    return [(name, share / whole) for name, share in kept]
 
 
 def percent(share: float) -> str:
