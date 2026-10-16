@@ -125,7 +125,15 @@ def fetch_repos(user: str, token: str | None = None) -> list[Repo]:
             continue
         name = raw["name"]
         branch = raw.get("default_branch") or "main"
-        head = _get(f"/repos/{user}/{name}/commits/{branch}", token)
+        try:
+            head = _get(f"/repos/{user}/{name}/commits/{branch}", token)
+        except urllib.error.HTTPError as exc:
+            # 409 is GitHub's "Git Repository is empty": a repository created
+            # on the site before its first push. It has no work to show yet,
+            # and failing here would stop every other repository's refresh.
+            if exc.code == 409:
+                continue
+            raise
         repos.append(
             Repo(
                 name=name,

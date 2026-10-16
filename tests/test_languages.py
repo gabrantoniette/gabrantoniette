@@ -110,3 +110,26 @@ def test_commit_count_comes_from_the_last_page_link():
 def test_commit_count_without_a_link_is_the_page_itself():
     assert github.count_from([{}], "") == 1
     assert github.count_from([], "") == 0
+
+
+def test_an_empty_repository_is_skipped_instead_of_failing_the_run(monkeypatch):
+    """GitHub answers 409 for the commits of a repository with no push yet."""
+    listing = [
+        {"name": name, "html_url": f"https://github.com/me/{name}", "default_branch": "main"}
+        for name in ("empty", "full")
+    ]
+    commit = {"commit": {"committer": {"date": "2026-10-16T12:00:00Z"}}}
+
+    def fake_request(path, token):
+        if path.startswith("/users/"):
+            return listing, {}
+        if path.startswith("/repos/me/empty/"):
+            raise github.urllib.error.HTTPError(path, 409, "Git Repository is empty.", {}, None)
+        if path.endswith("/languages"):
+            return {"Python": 100}, {}
+        if "per_page=1" in path:
+            return [{}], {}
+        return commit, {}
+
+    monkeypatch.setattr(github, "_request", fake_request)
+    assert [repo.name for repo in github.fetch_repos("me")] == ["full"]
