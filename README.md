@@ -118,41 +118,50 @@ class Gabriel:
 ### What I'm building
 
 <!-- projects:start -->
-#### [Students Categorization](https://github.com/gabrantoniette/students-categorization): from a dirty CSV to a neural network
+#### [ai-web](https://github.com/gabrantoniette/ai-web)
 
 <p>
-  <a href="https://github.com/gabrantoniette/students-categorization">
-    <img src="https://img.shields.io/badge/Repository-students--categorization-1F3864?style=flat-square&logo=github&logoColor=white" alt="students-categorization repository">
+  <a href="https://github.com/gabrantoniette/ai-web">
+    <img src="https://img.shields.io/badge/Repository-ai--web-1F3864?style=flat-square&logo=github&logoColor=white" alt="ai-web repository">
   </a>
-  <img src="https://img.shields.io/github/last-commit/gabrantoniette/students-categorization?style=flat-square&color=4A7DBF" alt="Date of the last commit">
+  <img src="https://img.shields.io/github/last-commit/gabrantoniette/ai-web?style=flat-square&color=4A7DBF" alt="Date of the last commit">
 </p>
 
 <p>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/generated/languages/students-categorization-dark.svg">
-    <img src="assets/generated/languages/students-categorization-light.svg" alt="Languages in students-categorization, by share of code">
+    <source media="(prefers-color-scheme: dark)" srcset="assets/generated/languages/ai-web-dark.svg">
+    <img src="assets/generated/languages/ai-web-light.svg" alt="Languages in ai-web, by share of code">
   </picture>
 </p>
 
-A study project that walks the whole path of a classification problem. A Python medallion pipeline takes 10,000 rows of messy, fictional student data, validates them against a JSON data contract and encodes the 6,574 valid students as vectors for a TensorFlow.js network running in Node.
+On-device AI demos running 100% in the browser with Chrome's Built-in AI APIs (Gemini Nano): Prompt API, Translator and Language Detector.
 
-The whole path is done: bronze keeps the CSV as it arrived, silver applies the contract and records why each of the 3,248 rejected rows failed, gold writes the input and output vectors, and a TensorFlow.js network trains on them. Students who sign up later take the same path in files of their own, and the network suggests a category for each of them. What it still doesn't do is test the model on students it has never seen, and the README says so.
-
-<details>
-<summary><b>Decisions worth the click</b></summary>
+<p>
+  <code>JavaScript</code>
+</p>
 
 <br>
 
-- **A contract decides what valid means.** Types, ranges, allowed values and synonyms live in one JSON file, so `sp`, `São Paulo, SP` and `sao paulo - sp` all land on `São Paulo` without an `if` in the cleaning code.
-- **Rejected rows keep their reason.** Silver never drops a bad row silently: it keeps the raw values, the source line and one error column per field, so every rejection traces back to a line of the CSV.
-- **Age is scaled by the contract, not by the data.** Min-max uses the contract's 18 to 65 bounds instead of the dataset's own minimum and maximum, so a new student at prediction time lands on the same scale as the training set.
-- **The sign-up time is the watermark.** A run reads the whole file of new students but adds only the ones who signed up after the last student already in, so running it twice adds nothing. Every line that stays out goes to a quarantine file once, with its reason: invalid, empty, duplicate or late.
-- **The roadmap is public and honest.** Contract, the three layers, training, new students and their categories are checked off; evaluating the model on unseen students is not, and the README lists it as a known issue. A study project that claims to be finished teaches nobody anything.
-
-</details>
+#### [image-recognation](https://github.com/gabrantoniette/image-recognation)
 
 <p>
-  <code>Python</code> <code>pandas</code> <code>TensorFlow.js</code> <code>Node.js</code> <code>JavaScript</code>
+  <a href="https://github.com/gabrantoniette/image-recognation">
+    <img src="https://img.shields.io/badge/Repository-image--recognation-1F3864?style=flat-square&logo=github&logoColor=white" alt="image-recognation repository">
+  </a>
+  <img src="https://img.shields.io/github/last-commit/gabrantoniette/image-recognation?style=flat-square&color=4A7DBF" alt="Date of the last commit">
+</p>
+
+<p>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/generated/languages/image-recognation-dark.svg">
+    <img src="assets/generated/languages/image-recognation-light.svg" alt="Languages in image-recognation, by share of code">
+  </picture>
+</p>
+
+Duck Hunt played by AI: YOLOv5n runs in the browser with TensorFlow.js in a Web Worker, detects the ducks and shoots them on its own.
+
+<p>
+  <code>JavaScript</code> <code>TensorFlow</code>
 </p>
 
 <br>
@@ -191,32 +200,6 @@ It scores every draft against a seven-criteria rubric, and one of them is disqua
 
 <p>
   <code>Python</code> <code>Agno</code> <code>Anthropic API</code> <code>SQLite</code> <code>Typer</code> <code>Playwright</code> <code>pytest</code>
-</p>
-
-<br>
-
-#### [Products Recommendations](https://github.com/gabrantoniette/products-recommendations): a recommender that will train in the browser
-
-<p>
-  <a href="https://github.com/gabrantoniette/products-recommendations">
-    <img src="https://img.shields.io/badge/Repository-products--recommendations-1F3864?style=flat-square&logo=github&logoColor=white" alt="products-recommendations repository">
-  </a>
-  <img src="https://img.shields.io/github/last-commit/gabrantoniette/products-recommendations?style=flat-square&color=4A7DBF" alt="Date of the last commit">
-</p>
-
-<p>
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/generated/languages/products-recommendations-dark.svg">
-    <img src="assets/generated/languages/products-recommendations-light.svg" alt="Languages in products-recommendations, by share of code">
-  </picture>
-</p>
-
-An e-commerce page that runs entirely in the browser: pick a customer, see what they bought, buy something else. Those purchases are the data a TensorFlow.js network will learn to recommend products from, in a Web Worker so the page never freezes, with tfjs-vis wired up to chart the training.
-
-It's early. The page, the purchase tracking and the worker plumbing run; the network doesn't exist yet, and the training step is a placeholder that reports progress without learning anything. The README says so in its opening lines.
-
-<p>
-  <code>JavaScript</code> <code>TensorFlow.js</code> <code>tfjs-vis</code> <code>Web Workers</code> <code>Bootstrap</code>
 </p>
 <!-- projects:end -->
 
