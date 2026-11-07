@@ -1,10 +1,10 @@
-"""Read the public repositories that count as recent work.
+"""Read the public repositories that count as the newest work.
 
-Ranking uses the last commit on the default branch, not `pushed_at`.
-`pushed_at` moves for a push to any branch: halcyon-goods-product-control
-reported 2026-09-01 from a side branch while its `main` had not moved since
-2026-08-18. The default-branch date is also what the `last-commit` badge
-renders, so the prose and the badge cannot disagree.
+Ranking uses `created_at`: the three newest repositories are the three that
+most recently arrived on the profile. GitHub keeps no "made public on" date,
+so the creation date is the closest honest proxy. Ranking by last commit made
+the cards churn with every push and kept an old project on the page for as
+long as it was being maintained.
 """
 
 from __future__ import annotations
@@ -33,6 +33,7 @@ class Repo:
     last_commit: str
     languages: dict[str, int] = field(default_factory=dict)
     commits: int = 0   # by the owner, on the default branch
+    created_at: str = ""   # ISO timestamp the repository was created
 
     def language_shares(self) -> dict[str, float]:
         """Each language's share of the repository's bytes, as the Languages tab shows it."""
@@ -115,7 +116,7 @@ def eligible(raw: dict, user: str) -> bool:
 
 
 def fetch_repos(user: str, token: str | None = None) -> list[Repo]:
-    """Every eligible public repository, most recently committed to first."""
+    """Every eligible public repository, newest first."""
     token = token or os.environ.get("GITHUB_TOKEN") or None
     listing = _get(f"/users/{user}/repos?type=owner&per_page=100&sort=pushed", token)
 
@@ -144,6 +145,7 @@ def fetch_repos(user: str, token: str | None = None) -> list[Repo]:
                 last_commit=head["commit"]["committer"]["date"],
                 languages=_get(f"/repos/{user}/{name}/languages", token),
                 commits=_commits_by(user, name, branch, token),
+                created_at=raw.get("created_at") or "",
             )
         )
 
@@ -151,5 +153,5 @@ def fetch_repos(user: str, token: str | None = None) -> list[Repo]:
 
 
 def rank(repos: list[Repo]) -> list[Repo]:
-    """Most recent commit first, name as the tie-breaker so runs agree."""
-    return sorted(repos, key=lambda repo: (repo.last_commit, repo.name), reverse=True)
+    """Newest repository first, name as the tie-breaker so runs agree."""
+    return sorted(repos, key=lambda repo: (repo.created_at, repo.name), reverse=True)

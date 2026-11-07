@@ -1,7 +1,7 @@
 # The writing behind each project card in the generated
 # <!-- projects:start --> block.
 #
-# The three most recently worked-on public repositories are chosen by the
+# The three newestly worked-on public repositories are chosen by the
 # workflow, not here. This file only supplies what no API can produce: the
 # title, the headline after the colon, the narrative, the decisions behind
 # the fold, and the curated chips.
