@@ -6,7 +6,7 @@ Usage:
     python scripts/update-profile.py --write    # apply it
 
 What it owns:
-  * two marker-anchored blocks of README.md: the three most recently
+  * two marker-anchored blocks of README.md: the three newestly
     worked-on public projects, and the stack detected from them
   * assets/generated/: the two language donuts in "GitHub at a glance", and
     one language bar per public repository, which that repository's own
@@ -80,7 +80,7 @@ def report_for(entered, left, added, unresolved, redrawn, missing) -> str:
     if entered or left:
         lines.append("**Projects**")
         for name in entered:
-            lines.append(f"- `{name}` entered the three most recent")
+            lines.append(f"- `{name}` entered the three newest")
         for name in left:
             lines.append(f"- `{name}` dropped out")
         lines.append("")

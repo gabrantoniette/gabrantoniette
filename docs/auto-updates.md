@@ -6,7 +6,7 @@ touches it.
 
 | What | Holds | Owner |
 |---|---|---|
-| `<!-- projects:start -->` | the three most recently worked-on public projects, and only those three | `scripts/update-profile.py` |
+| `<!-- projects:start -->` | the three newest public projects (by creation date), and only those three | `scripts/update-profile.py` |
 | `<!-- stack:start -->` | the badge groups | `scripts/update-profile.py` |
 | `assets/generated/languages-by-*.svg` | the two language donuts in *GitHub at a glance* | `scripts/update-profile.py` |
 | `assets/generated/languages/<repo>-*.svg` | one language bar per public repository | `scripts/update-profile.py` |
@@ -22,7 +22,7 @@ stacking another beside it. The pull request's description says what moved.
 
 What counts as a change:
 
-- a different project joins the three most recent
+- a different project joins the three newest
 - a technology shows up that the stack does not have yet
 - a repository's languages or the number of commits you made to it change,
   which redraws its language bar and the donuts

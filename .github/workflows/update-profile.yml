@@ -1,13 +1,12 @@
 name: Update profile README
 
 # Regenerates everything on the profile that comes from the repositories:
-# the three most recently worked-on public projects, the stack detected from
+# the three newest public projects, the stack detected from
 # them, the two language donuts and one language bar per public repository.
 #
-# It opens a pull request only when something actually changed, and keeps a
-# single one open: a later run updates it instead of stacking another beside
-# it. Dates on the page do not need a run at all -- they come from live
-# badges.
+# It opens a pull request only when something actually changed, merges it
+# itself, and keeps a single one open at a time. Dates on the page do not
+# need a run at all -- they come from live badges.
 
 on:
   schedule:
@@ -72,20 +71,19 @@ jobs:
           # another one beside it.
           open=$(gh pr list --head "$branch" --state open --json number --jq '.[].number')
 
-          # Until that pull request is merged, main stays behind it and every
-          # run finds the same change again. Push only when it is new.
-          if [ -n "$open" ] && git fetch --quiet origin "$branch" && git diff --quiet FETCH_HEAD HEAD; then
-            echo "pull request #$open already holds this change"
-            exit 0
+          # Push only when the change is new; an identical open pull request
+          # is not a reason to stop, because it may be waiting to be merged.
+          if [ -z "$open" ] || ! { git fetch --quiet origin "$branch" && git diff --quiet FETCH_HEAD HEAD; }; then
+            git push --force -u origin "$branch"
           fi
-          git push --force -u origin "$branch"
 
           if [ -z "$open" ]; then
-            gh pr create \
-              --base main \
-              --head "$branch" \
-              --title "chore: atualiza o perfil a partir dos repositorios" \
-              --body-file "${{ runner.temp }}/report.md"
+            open=$(gh pr create               --base main               --head "$branch"               --title "chore: atualiza o perfil a partir dos repositorios"               --body-file "${{ runner.temp }}/report.md")
           else
             gh pr edit "$open" --body-file "${{ runner.temp }}/report.md"
           fi
+
+          # Nobody has to remember to merge it: this is generated content and
+          # the tests above already passed. Left open, the pull request froze
+          # the profile for weeks while the hourly runs kept succeeding.
+          gh pr merge "$open" --squash --delete-branch

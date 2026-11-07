@@ -1,4 +1,4 @@
-"""Render the three most recent projects as cards.
+"""Render the three newest projects as cards.
 
 The shape is the one the README already had by hand. What changes is where
 the writing comes from: projects.toml when it exists, the repository's own
