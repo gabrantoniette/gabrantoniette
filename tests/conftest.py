@@ -60,6 +60,7 @@ def make_repo(
     languages: dict[str, int] | None = None,
     last_commit: str = "2026-09-22T00:00:00Z",
     commits: int = 0,
+    created_at: str = "2026-09-22T00:00:00Z",
 ) -> github.Repo:
     return github.Repo(
         name=name,
@@ -70,4 +71,5 @@ def make_repo(
         last_commit=last_commit,
         languages=languages or {},
         commits=commits,
+        created_at=created_at,
     )

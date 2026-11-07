@@ -49,9 +49,6 @@ class Gabriel:
     )
     languages: tuple[str, ...] = ("Portuguese (native)", "English (full professional proficiency)")
 
-    def currently_building(self) -> str:
-        return "Multi-agent systems in Python to help me generate content and engage with my social media audience."
-
     def open_to(self) -> list[str]:
         return ["AI engineering roles"]
 ```
@@ -82,6 +79,8 @@ class Gabriel:
   <img src="https://img.shields.io/badge/Alembic-6BA81E?style=flat-square&logo=python&logoColor=white" alt="Alembic">
   <img src="https://img.shields.io/badge/SQL-4479A1?style=flat-square&logo=postgresql&logoColor=white" alt="SQL">
   <img src="https://img.shields.io/badge/pandas-150458?style=flat-square&logo=pandas&logoColor=white" alt="pandas">
+  <img src="https://img.shields.io/badge/Fastify-000000?style=flat-square&logo=fastify&logoColor=white" alt="Fastify">
+  <img src="https://img.shields.io/badge/Neo4j-4581C3?style=flat-square&logo=neo4j&logoColor=white" alt="Neo4j">
 </p>
 
 **Infrastructure**
@@ -90,6 +89,7 @@ class Gabriel:
   <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker">
   <img src="https://img.shields.io/badge/GitHub_Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white" alt="GitHub Actions">
   <img src="https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white" alt="Git">
+  <img src="https://img.shields.io/badge/Grafana-F46800?style=flat-square&logo=grafana&logoColor=white" alt="Grafana">
 </p>
 
 **Frontend, when the project needs one**
@@ -111,6 +111,12 @@ class Gabriel:
   <img src="https://img.shields.io/badge/PySpark-E25A1C?style=flat-square&logo=apachespark&logoColor=white" alt="PySpark">
   <img src="https://img.shields.io/badge/Power_BI-F2C811?style=flat-square&logo=powerbi&logoColor=black" alt="Power BI">
 </p>
+
+**Recently picked up**
+
+<p>
+  <img src="https://img.shields.io/badge/OpenRouter-94A3B8?style=flat-square&logo=openrouter&logoColor=white" alt="OpenRouter">
+</p>
 <!-- stack:end -->
 
 ---
@@ -118,6 +124,54 @@ class Gabriel:
 ### What I'm building
 
 <!-- projects:start -->
+#### [LLMs-APIs-integrations](https://github.com/gabrantoniette/LLMs-APIs-integrations)
+
+<p>
+  <a href="https://github.com/gabrantoniette/LLMs-APIs-integrations">
+    <img src="https://img.shields.io/badge/Repository-LLMs--APIs--integrations-1F3864?style=flat-square&logo=github&logoColor=white" alt="LLMs-APIs-integrations repository">
+  </a>
+  <img src="https://img.shields.io/github/last-commit/gabrantoniette/LLMs-APIs-integrations?style=flat-square&color=4A7DBF" alt="Date of the last commit">
+</p>
+
+<p>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/generated/languages/LLMs-APIs-integrations-dark.svg">
+    <img src="assets/generated/languages/LLMs-APIs-integrations-light.svg" alt="Languages in LLMs-APIs-integrations, by share of code">
+  </picture>
+</p>
+
+Fastify gateway that routes LLM chat requests through OpenRouter with model fallback and price/latency/throughput sorting
+
+<p>
+  <code>Fastify</code> <code>Node.js</code> <code>OpenRouter</code> <code>TypeScript</code>
+</p>
+
+<br>
+
+#### [rag-implementation](https://github.com/gabrantoniette/rag-implementation)
+
+<p>
+  <a href="https://github.com/gabrantoniette/rag-implementation">
+    <img src="https://img.shields.io/badge/Repository-rag--implementation-1F3864?style=flat-square&logo=github&logoColor=white" alt="rag-implementation repository">
+  </a>
+  <img src="https://img.shields.io/github/last-commit/gabrantoniette/rag-implementation?style=flat-square&color=4A7DBF" alt="Date of the last commit">
+</p>
+
+<p>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/generated/languages/rag-implementation-dark.svg">
+    <img src="assets/generated/languages/rag-implementation-light.svg" alt="Languages in rag-implementation, by share of code">
+  </picture>
+</p>
+
+Zero-cost, reusable GraphRAG in TypeScript: Neo4j vector + graph retrieval, free OpenRouter models, and locally verified citations with an evidence gate.
+
+<p>
+  <code>Grafana</code> <code>Neo4j</code> <code>OpenRouter</code> <code>TensorFlow</code> <code>TypeScript</code>
+</p>
+
+<br>
+
 #### [ai-web](https://github.com/gabrantoniette/ai-web)
 
 <p>
@@ -138,68 +192,6 @@ On-device AI demos running 100% in the browser with Chrome's Built-in AI APIs (G
 
 <p>
   <code>JavaScript</code>
-</p>
-
-<br>
-
-#### [image-recognation](https://github.com/gabrantoniette/image-recognation)
-
-<p>
-  <a href="https://github.com/gabrantoniette/image-recognation">
-    <img src="https://img.shields.io/badge/Repository-image--recognation-1F3864?style=flat-square&logo=github&logoColor=white" alt="image-recognation repository">
-  </a>
-  <img src="https://img.shields.io/github/last-commit/gabrantoniette/image-recognation?style=flat-square&color=4A7DBF" alt="Date of the last commit">
-</p>
-
-<p>
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/generated/languages/image-recognation-dark.svg">
-    <img src="assets/generated/languages/image-recognation-light.svg" alt="Languages in image-recognation, by share of code">
-  </picture>
-</p>
-
-Duck Hunt played by AI: YOLOv5n runs in the browser with TensorFlow.js in a Web Worker, detects the ducks and shoots them on its own.
-
-<p>
-  <code>JavaScript</code> <code>TensorFlow</code>
-</p>
-
-<br>
-
-#### [LinkedIn Growth](https://github.com/gabrantoniette/linkedin-growth-agents): a multi-agent system that writes, reviews and refuses
-
-<p>
-  <a href="https://github.com/gabrantoniette/linkedin-growth-agents">
-    <img src="https://img.shields.io/badge/Repository-linkedin--growth--agents-1F3864?style=flat-square&logo=github&logoColor=white" alt="linkedin-growth-agents repository">
-  </a>
-  <img src="https://img.shields.io/github/last-commit/gabrantoniette/linkedin-growth-agents?style=flat-square&color=4A7DBF" alt="Date of the last commit">
-</p>
-
-<p>
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/generated/languages/linkedin-growth-agents-dark.svg">
-    <img src="assets/generated/languages/linkedin-growth-agents-light.svg" alt="Languages in linkedin-growth-agents, by share of code">
-  </picture>
-</p>
-
-Ten [Agno](https://github.com/agno-agi/agno) agents that audit a LinkedIn profile, plan content, draft posts in Portuguese and English and render them as carousels, images or videos, coordinated by a team leader that delegates and synthesizes. Text goes out through LinkedIn's official API, and only after I approve it. Once a post has numbers, an analyst reads them and proposes what to change.
-
-It scores every draft against a seven-criteria rubric, and one of them is disqualifying: if the post claims experience the person doesn't have, the whole thing fails. It ran against my own data and rejected a draft I'd have been happy to publish, because I hadn't actually measured what the post said I'd measured. The system was right and I wasn't.
-
-<details>
-<summary><b>Decisions worth the click</b></summary>
-
-<br>
-
-- **The strategy lives in one file.** Changing how ten agents behave means editing `principles.py`, not ten agent files.
-- **Long-term memory across conversations.** The team writes what it learns; the agents read it. Something you mention on a Tuesday reaches a different agent, in a different session, on Friday.
-- **389 tests, none of which call a paid API.** A spy model stands in for Claude, so the tests can assert what actually reached the prompt.
-- **Honesty is a hard gate, not a guideline.** No invented experience, no numbers that aren't in the source data.
-
-</details>
-
-<p>
-  <code>Python</code> <code>Agno</code> <code>Anthropic API</code> <code>SQLite</code> <code>Typer</code> <code>Playwright</code> <code>pytest</code>
 </p>
 <!-- projects:end -->
 
