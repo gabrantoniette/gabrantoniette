@@ -64,7 +64,7 @@ shell = "GNU Bash"
     "TensorFlow", "PyTorch", "Keras", "scikit-learn", "Hugging Face", "LangChain",
     "LangGraph", "OpenAI", "Ollama", "Google Gemini", "Mistral AI", "Jupyter",
     "Streamlit", "Gradio", "MLflow", "spaCy", "OpenCV", "Typer", "Poetry", "uv",
-    "Ruff",
+    "Ruff", "OpenRouter",
 ]
 "Backend and data" = [
     "Flask", "Django", "Celery", "SQLAlchemy", "pandas", "NumPy", "Polars", "SciPy", "Apache Parquet", "DuckDB", "Apache Airflow",

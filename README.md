@@ -67,6 +67,9 @@ class Gabriel:
   <img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=flat-square&logo=tensorflow&logoColor=white" alt="TensorFlow">
   <img src="https://img.shields.io/badge/Pydantic-E92063?style=flat-square&logo=pydantic&logoColor=white" alt="Pydantic">
   <img src="https://img.shields.io/badge/pytest-0A9EDC?style=flat-square&logo=pytest&logoColor=white" alt="pytest">
+  <img src="https://img.shields.io/badge/LangChain-7FC8FF?style=flat-square&logo=langchain&logoColor=black" alt="LangChain">
+  <img src="https://img.shields.io/badge/LangGraph-7FC8FF?style=flat-square&logo=langgraph&logoColor=black" alt="LangGraph">
+  <img src="https://img.shields.io/badge/OpenRouter-94A3B8?style=flat-square&logo=openrouter&logoColor=white" alt="OpenRouter">
 </p>
 
 **Backend and data**
@@ -111,12 +114,6 @@ class Gabriel:
   <img src="https://img.shields.io/badge/PySpark-E25A1C?style=flat-square&logo=apachespark&logoColor=white" alt="PySpark">
   <img src="https://img.shields.io/badge/Power_BI-F2C811?style=flat-square&logo=powerbi&logoColor=black" alt="Power BI">
 </p>
-
-**Recently picked up**
-
-<p>
-  <img src="https://img.shields.io/badge/OpenRouter-94A3B8?style=flat-square&logo=openrouter&logoColor=white" alt="OpenRouter">
-</p>
 <!-- stack:end -->
 
 ---
@@ -124,7 +121,44 @@ class Gabriel:
 ### What I'm building
 
 <!-- projects:start -->
-#### [LLMs-APIs-integrations](https://github.com/gabrantoniette/LLMs-APIs-integrations)
+#### [LangChain Implementation](https://github.com/gabrantoniette/lang-chain-implementation): a chat endpoint that routes by intent
+
+<p>
+  <a href="https://github.com/gabrantoniette/lang-chain-implementation">
+    <img src="https://img.shields.io/badge/Repository-lang--chain--implementation-1F3864?style=flat-square&logo=github&logoColor=white" alt="lang-chain-implementation repository">
+  </a>
+  <img src="https://img.shields.io/github/last-commit/gabrantoniette/lang-chain-implementation?style=flat-square&color=4A7DBF" alt="Date of the last commit">
+</p>
+
+<p>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/generated/languages/lang-chain-implementation-dark.svg">
+    <img src="assets/generated/languages/lang-chain-implementation-light.svg" alt="Languages in lang-chain-implementation, by share of code">
+  </picture>
+</p>
+
+A Fastify endpoint backed by a LangGraph.js state graph. A question comes in at `POST /chat`, a first node works out what the message is asking for, and a conditional edge sends it to the node that handles it: make it uppercase, make it lowercase, or answer that the command is unknown. Every branch ends in the same node, which turns the result into the reply.
+
+The commands are deliberately trivial, because the point is the graph itself: typed state, conditional routing and one node per responsibility. The intent step is keyword matching today, not a model, and the README says so. The graph also opens in LangSmith Studio with Chat mode available, which is what pushed me to build the state on `MessagesZodState`.
+
+<details>
+<summary><b>Decisions worth the click</b></summary>
+
+<br>
+
+- **State built on `MessagesZodState`.** It exposes `langgraph_type: "messages"` in the schema, which is what makes LangSmith Studio offer Chat mode; `output` and `command` have defaults so a client only has to send messages.
+- **Routing is a conditional edge, not an `if` inside a node.** The intent node only labels the message; the graph decides where it goes, so adding a command means adding a node and a branch.
+- **Three end-to-end tests through Fastify's `inject()`.** Upper case, lower case and unknown command run in-process, with no open port and no network.
+
+</details>
+
+<p>
+  <code>TypeScript</code> <code>Node.js</code> <code>Fastify</code> <code>LangGraph</code> <code>LangChain</code>
+</p>
+
+<br>
+
+#### [LLMs APIs Integrations](https://github.com/gabrantoniette/LLMs-APIs-integrations): a gateway that picks the model so the client doesn't
 
 <p>
   <a href="https://github.com/gabrantoniette/LLMs-APIs-integrations">
@@ -140,15 +174,28 @@ class Gabriel:
   </picture>
 </p>
 
-Fastify gateway that routes LLM chat requests through OpenRouter with model fallback and price/latency/throughput sorting
+A collection of reference implementations for putting an LLM behind an HTTP API. The first one is a small Fastify gateway: the client posts a question, and the gateway sends it to OpenRouter with an ordered list of candidate models. OpenRouter falls back through the list and picks the provider by price, latency or throughput, and the response says which model actually answered.
+
+The routing policy lives in one config file, so changing the fallback order or the sort strategy never touches the service code. The gateway refuses to start without an API key, and the repository's `main` is protected behind a CI check.
+
+<details>
+<summary><b>Decisions worth the click</b></summary>
+
+<br>
+
+- **Model fallback and provider sorting are delegated to OpenRouter.** The gateway sends `models[]` plus `provider.sort`; it doesn't reimplement retries.
+- **The response names the model that answered.** A client can always tell which fallback it got.
+- **The tests hit the real OpenRouter API, so they are not run in CI.** They need a key and depend on live provider rankings; CI runs the type check, and the README says exactly that.
+
+</details>
 
 <p>
-  <code>Fastify</code> <code>Node.js</code> <code>OpenRouter</code> <code>TypeScript</code>
+  <code>TypeScript</code> <code>Node.js</code> <code>Fastify</code> <code>OpenRouter</code>
 </p>
 
 <br>
 
-#### [rag-implementation](https://github.com/gabrantoniette/rag-implementation)
+#### [RAG Implementation](https://github.com/gabrantoniette/rag-implementation): a GraphRAG that checks its own answers
 
 <p>
   <a href="https://github.com/gabrantoniette/rag-implementation">
@@ -164,34 +211,24 @@ Fastify gateway that routes LLM chat requests through OpenRouter with model fall
   </picture>
 </p>
 
-Zero-cost, reusable GraphRAG in TypeScript: Neo4j vector + graph retrieval, free OpenRouter models, and locally verified citations with an evidence gate.
+A reusable GraphRAG in TypeScript. It loads documents into Neo4j (a vector index, a fulltext index and an entity graph), retrieves with vector and fulltext search fused together and expanded through the graph, and makes a single call to a free OpenRouter model. Then the answer is checked locally: every citation has to exist in the retrieved context, and every sentence is compared by embedding similarity with the passages it cites.
 
-<p>
-  <code>Grafana</code> <code>Neo4j</code> <code>OpenRouter</code> <code>TensorFlow</code> <code>TypeScript</code>
-</p>
+I built it around one question, can I trust this answer? A question the corpus can't answer is refused before the model is even called, and the Sources section is built by code from validated citations, never written by the model. The README reports numbers from commands in the repository, including the ones that went badly.
+
+<details>
+<summary><b>Decisions worth the click</b></summary>
 
 <br>
 
-#### [ai-web](https://github.com/gabrantoniette/ai-web)
+- **A refusal is a correct answer.** An evidence gate refuses when the best passage scores below a threshold, which saves quota and avoids invention.
+- **Zero cost, enforced.** Only free OpenRouter models are allowed, and a non-free one is refused before any request is made.
+- **The reranker was not promoted.** Its nDCG@6 was 0.483 against 0.574 for the pass-through baseline, so the repository ships the baseline and says so. Adding the graph raised recall@6 from 0.813 to 0.875.
+- **The domain is data, not code.** Prompts, corpus and evaluation sets live in a domain folder, and a test fails if domain vocabulary leaks into `src/core`.
+
+</details>
 
 <p>
-  <a href="https://github.com/gabrantoniette/ai-web">
-    <img src="https://img.shields.io/badge/Repository-ai--web-1F3864?style=flat-square&logo=github&logoColor=white" alt="ai-web repository">
-  </a>
-  <img src="https://img.shields.io/github/last-commit/gabrantoniette/ai-web?style=flat-square&color=4A7DBF" alt="Date of the last commit">
-</p>
-
-<p>
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/generated/languages/ai-web-dark.svg">
-    <img src="assets/generated/languages/ai-web-light.svg" alt="Languages in ai-web, by share of code">
-  </picture>
-</p>
-
-On-device AI demos running 100% in the browser with Chrome's Built-in AI APIs (Gemini Nano): Prompt API, Translator and Language Detector.
-
-<p>
-  <code>JavaScript</code>
+  <code>TypeScript</code> <code>Neo4j</code> <code>OpenRouter</code> <code>TensorFlow.js</code> <code>Grafana</code>
 </p>
 <!-- projects:end -->
 
